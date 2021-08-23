@@ -1,1 +1,2 @@
-# modoo-todo
+# MODOO TODO LIST
+투두리스트.
