@@ -1,4 +1,4 @@
-const LocalStorageKey = {
-  key: 'localStorageKey',
+const LS_KEY = {
+  TODOS: 'todos',
 };
-export default LocalStorageKey;
+export default LS_KEY;
