@@ -2,10 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { GNB } from 'components/Layout';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC = ({ children }) => {
   return (
     <>
       <GNB />
