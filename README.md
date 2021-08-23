@@ -1,2 +1,3 @@
 # MODOO TODO LIST
-투두리스트.
+배포링크 : https://modo-todo.netlify.app/
+(마스터 기준)
