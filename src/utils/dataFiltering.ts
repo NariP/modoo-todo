@@ -1,6 +1,6 @@
 import { ITodo } from './localStorageHelper';
 import { STATUS } from './constants/Status';
-import { getFormattedDate } from './getFormattedDate';
+import { getFormattedDate } from 'utils';
 
 interface IStatus {
   [key: string]: string;
