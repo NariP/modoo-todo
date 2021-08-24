@@ -9,5 +9,12 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
+  input {
+  border: none;
+  outline: none;
+  }
+  button {
+  cursor: pointer
+  }
 `;
 export default GlobalStyle;
