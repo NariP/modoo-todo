@@ -1,6 +1,4 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import mockData from 'utils/mockData.json';
 import { Select } from 'components/Select';
 import { MyDatePicker } from 'components/DatePicker';
@@ -56,6 +54,5 @@ const Contents = styled.div`
   align-items:center;
   justify-content:space-around;
 `
-
 
 export default TodoContainer;

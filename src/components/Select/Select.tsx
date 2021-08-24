@@ -1,4 +1,5 @@
 import React from 'react';
+import { selectList } from 'utils/constants/Status';
 
 interface ISelect {
    value: string;
@@ -6,16 +7,12 @@ interface ISelect {
 }
 
 const Select: React.FC<ISelect> = ({ value, handleChange }) => {
-
    return (
-      <>
-         <select value={value} onChange={handleChange} >
-            <option>전체</option>
-            <option>완료</option>
-            <option>진행중</option>
-            <option>시작안함</option>
-         </select>
-      </>
+      <select value={value} onChange={handleChange} >
+         {selectList.map(option => {
+            return <option key={option}>{option}</option>
+         })}
+      </select>
    )
 }
 

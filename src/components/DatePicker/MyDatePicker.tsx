@@ -16,9 +16,6 @@ const MyDatePicker: React.FC<IDate> = ({ date, handleChange }) => {
       onChange={handleChange}
       placeholderText="Select date"
     />
-
-
-
   );
 
 }
