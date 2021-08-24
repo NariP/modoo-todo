@@ -11,8 +11,8 @@ const Layout: React.FC = ({ children }) => {
   );
 };
 const StyledMain = styled.main`
-  background: ${props => props.theme.color.bgColor};
-  color: ${props => props.theme.color.textColor};
+  background: ${({ theme }) => theme.light.bgColor};
+  color: ${({ theme }) => theme.light.textColor};
   width: 1000px;
   margin: 0 auto;
 `;
