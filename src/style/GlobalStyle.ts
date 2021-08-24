@@ -8,13 +8,16 @@ const GlobalStyle = createGlobalStyle`
   }
   * {
     box-sizing: border-box;
+    font-family: NanumSquareRound, sans-serif;
   }
   input {
   border: none;
   outline: none;
   }
   button {
-  cursor: pointer
+  background: none;
+  border: none;
+  cursor: pointer;
   }
 `;
 export default GlobalStyle;
