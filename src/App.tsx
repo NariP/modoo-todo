@@ -1,10 +1,10 @@
 import { Layout } from 'components/Layout';
-import { TodoContainer } from 'pages/todo';
+import TodoPage from 'pages/Todo';
 
 function App() {
   return (
     <Layout>
-      <TodoContainer />
+      <TodoPage />
     </Layout>
   );
 }
