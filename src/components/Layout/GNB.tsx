@@ -3,22 +3,24 @@ import styled from 'styled-components';
 import { ToggleButton } from 'components/ToggleButton';
 import { Icon } from 'components/Icon';
 
-const GNB = () => {
+interface IGnbProps {
+  setTheme: Function;
+}
+const GNB: React.FC<IGnbProps> = ({ setTheme }) => {
   return (
     <StyledHeader>
       <StyledLogo>MODOO</StyledLogo>
       <StyledToggleButtonContainer>
         <Icon>☀️</Icon>
-        <ToggleButton />
+        <ToggleButton setTheme={setTheme} />
         <Icon>🌙</Icon>
       </StyledToggleButtonContainer>
     </StyledHeader>
   );
 };
 const StyledHeader = styled.header`
-  // NOTE: theme 사용하기
-  background: white;
-  color: #333;
+  background: ${({ theme }) => theme.color.bgColor};
+  color: ${({ theme }) => theme.color.textColor};
   border-bottom: 1px solid rgba(153, 153, 153, 0.3);
   box-shadow: 0 3px 5px rgba(153, 153, 153, 0.3);
 
@@ -29,8 +31,7 @@ const StyledHeader = styled.header`
   padding: 1em;
 `;
 const StyledLogo = styled.div`
-  // NOTE: theme 사용하기
-  color: black;
+  color: ${({ theme }) => theme.color.textColor};
 
   font-size: 1.2em;
   font-weight: 800;
