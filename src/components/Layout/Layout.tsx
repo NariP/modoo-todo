@@ -15,5 +15,6 @@ const StyledMain = styled.main`
   color: ${({ theme }) => theme.light.textColor};
   width: 1000px;
   margin: 0 auto;
+  margin-top: 40px;
 `;
 export default Layout;

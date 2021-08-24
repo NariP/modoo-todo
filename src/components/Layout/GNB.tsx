@@ -25,7 +25,7 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  position: fixed;
+  position: sticky;
   padding: 1em;
 `;
 const StyledLogo = styled.div`

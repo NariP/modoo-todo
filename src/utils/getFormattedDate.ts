@@ -1,10 +1,4 @@
-const getFormattedDate = () => {
-  const options: object = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
-  return new Date().toLocaleDateString('en-US', options);
+const getFormattedDate = (date: string): string => {
+  return date.length < 2 ? '0' + date : date;
 };
 export default getFormattedDate;
