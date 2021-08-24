@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from 'components/Layout';
-import { TodoContainer } from 'pages/todo';
+import { TodoContainer } from 'pages/Todo';
 interface IAppProps {
   setTheme: Function;
 }
