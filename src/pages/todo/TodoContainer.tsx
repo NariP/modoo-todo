@@ -1,63 +1,64 @@
-import React, { useEffect, useState } from 'react';
-import mockData from 'utils/mockData.json';
-import { Select } from 'components/Select';
-import { MyDatePicker } from 'components/DatePicker';
-import styled from 'styled-components';
-import {
-  filterStatus,
-  filterDate,
-  OriginData,
-  filterAll,
-} from 'utils/dataFiltering';
+import React, { useState, useEffect, useRef } from 'react';
+import TodoPresenter from 'pages/todo/TodoPresenter';
+import { localStorageHelper } from 'utils';
+import { ITodo } from 'utils/localStorageHelper';
+import { LS_KEY } from 'utils/constants';
 
-const TodoContainer = () => {
-  const [select, setSelect] = useState<string>('전체');
-  const [startDate, setStartDate] = useState<null | Date>(null);
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelect(e.target.value);
+const TodoContainer: React.FC = () => {
+  const todos: ITodo[] | null = localStorageHelper.getItem('todos');
+  const [resetTodos, setResetTodos] = useState<ITodo[] | null>(todos);
+  const [todo, setTodo] = useState<string>('');
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const onChangeTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTodo(e.target.value);
   };
-  const handleDate = (e: Date) => {
-    setStartDate(e);
+
+  const addTodo = (
+    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLElement>,
+  ) => {
+    if (todo === '') {
+      console.log(resetTodos);
+      inputRef.current?.focus();
+      return;
+    }
+    e.preventDefault();
+    todos
+      ? localStorageHelper.setItem(LS_KEY.TODOS, [
+          ...todos,
+          {
+            id: Date.now(),
+            taskName: todo,
+            status: '미정',
+            createdAt: String(new Date()),
+            updatedAt: '미정',
+          },
+        ])
+      : localStorageHelper.setItem(LS_KEY.TODOS, [
+          {
+            id: Date.now(),
+            taskName: todo,
+            status: '미정',
+            createdAt: String(new Date()),
+            updatedAt: '미정',
+          },
+        ]);
+    if (inputRef.current) {
+      inputRef.current.value = '';
+      setTodo('');
+    }
+    setResetTodos(todos);
   };
-  useEffect(() => {
-    if (select === '전체' && !startDate) {
-      console.log(OriginData(mockData));
-    }
-    // 상태 필터
-    else if (select !== '전체' && !startDate) {
-      console.log(filterStatus(select, mockData));
-    }
-    // 생성일 필터
-    else if (select === '전체' && startDate) {
-      console.log(filterDate(startDate, mockData));
-    }
-    // 상태, 생성일 필터
-    else {
-      console.log(filterAll(select, startDate, mockData));
-    }
-  }, [select, startDate]);
 
   return (
-    <>
-      <FilterLayout>
-        <Contents>
-          <Select value={select} handleChange={handleSelect} />
-          <MyDatePicker date={startDate} handleChange={handleDate} />
-        </Contents>
-      </FilterLayout>
-    </>
+    <TodoPresenter
+      todos={todos}
+      onChangeTodo={onChangeTodo}
+      addTodo={addTodo}
+      inputRef={inputRef}
+      setResetTodos={setResetTodos}
+    />
   );
 };
-
-const FilterLayout = styled.div`
-  width: 100%;
-  display: flex;
-`;
-const Contents = styled.div`
-  width: 30%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-`;
 
 export default TodoContainer;

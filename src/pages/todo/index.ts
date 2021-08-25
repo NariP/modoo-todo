@@ -1,2 +1,2 @@
-export { default as TodoContainer } from './TodoContainer';
-export { default as TodoPresenter } from './TodoPresenter';
+export { default as TodoContainer } from 'pages/todo/TodoContainer';
+export { default as TodoPresenter } from 'pages/todo/TodoPresenter';
