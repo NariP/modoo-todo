@@ -6,9 +6,7 @@ import { ITodo } from 'utils/localStorageHelper';
 
 interface ITodoPresenter {
   todos: ITodo[] | null;
-  addTodo: (
-    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLElement>,
-  ) => void;
+  addTodo: (e: React.FormEvent<HTMLFormElement>) => void;
   onChangeTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputRef: RefObject<HTMLInputElement>;
   setTodos: (todos: ITodo[]) => void;

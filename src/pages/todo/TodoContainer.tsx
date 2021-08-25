@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import TodoPresenter from 'pages/todo/TodoPresenter';
 import { localStorageHelper } from 'utils';
 import { ITodo } from 'utils/localStorageHelper';
@@ -15,40 +15,48 @@ const TodoContainer: React.FC = () => {
     setTodo(e.target.value);
   };
 
-  const addTodo = (
-    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLElement>,
-  ) => {
-    e.preventDefault();
-    if (todo === '') {
-      inputRef.current?.focus();
-      return;
+  const validateTodo = (): boolean => {
+    const validatedTodo = todo.trim();
+    if (validatedTodo === '') {
+      return false;
     }
-    todos
-      ? localStorageHelper.setItem(LS_KEY.TODOS, [
-          ...todos,
-          {
-            id: Date.now(),
-            taskName: todo,
-            status: '미정',
-            createdAt: String(new Date()),
-            updatedAt: '미정',
-          },
-        ])
-      : localStorageHelper.setItem(LS_KEY.TODOS, [
-          {
-            id: Date.now(),
-            taskName: todo,
-            status: '미정',
-            createdAt: String(new Date()),
-            updatedAt: '미정',
-          },
-        ]);
-    const newTodos: ITodo[] | null = localStorageHelper.getItem(LS_KEY.TODOS);
-    setTodos(newTodos);
+    return true;
+  };
+
+  const setDate = (): string => {
+    const date = String(new Date()).split(' ').slice(0, 3).join(' ');
+    return date;
+  };
+
+  const updateTodos = (): void => {
+    const newTodo: ITodo = {
+      id: Date.now(),
+      taskName: todo,
+      status: '미정',
+      createdAt: setDate(),
+      updatedAt: '미정',
+    };
+    todos ? setTodos([...todos, { ...newTodo }]) : setTodos([{ ...newTodo }]);
+  };
+
+  const updateStorage = (): void => {
+    todos && localStorageHelper.setItem(LS_KEY.TODOS, todos);
+  };
+
+  const addTodo = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!validateTodo()) return;
+    updateTodos();
+    updateStorage();
+    setTodo('');
     if (inputRef.current) {
       inputRef.current.value = '';
     }
   };
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [todos]);
 
   return (
     <TodoPresenter
