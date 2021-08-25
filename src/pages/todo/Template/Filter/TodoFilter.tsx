@@ -52,7 +52,6 @@ const TodoFilter = () => {
         <Text>생성일</Text>
         <MyDatePicker date={startDate} handleChange={handleDate} />
       </Contents>
-
     </FilterLayout>
   );
 };
