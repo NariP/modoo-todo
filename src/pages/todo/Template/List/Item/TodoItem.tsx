@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { LS_KEY } from 'utils/constants';
 import localStorageHelper, { ITodo } from 'utils/localStorageHelper';
 
 interface ITodoItem {
@@ -12,9 +13,9 @@ const TodoItem: React.FC<ITodoItem> = ({ todo, setResetTodos }) => {
     const id = todo?.id;
     // const todos =
     const todos = localStorageHelper
-      ?.getItem('todos')
+      ?.getItem(LS_KEY.TODOS)
       ?.filter(todo => todo.id !== id);
-    todos && localStorageHelper.setItem('todos', [...todos]);
+    todos && localStorageHelper.setItem(LS_KEY.TODOS, [...todos]);
     todos && setResetTodos(todos);
   };
 

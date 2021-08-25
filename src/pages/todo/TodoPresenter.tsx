@@ -1,7 +1,7 @@
 import React, { RefObject } from 'react';
 import styled from 'styled-components';
-import TodoHead from 'pages/Todo/Template/Head/TodoHead';
-import TodoList from 'pages/Todo/Template/List/TodoList';
+import TodoHead from 'pages/todo/Template/Head/TodoHead';
+import TodoList from 'pages/todo/Template/List/TodoList';
 import { ITodo } from 'utils/localStorageHelper';
 
 interface ITodoPresenter {

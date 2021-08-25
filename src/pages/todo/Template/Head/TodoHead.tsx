@@ -12,9 +12,9 @@ interface ITodoHead {
 const TodoHead: React.FC<ITodoHead> = ({ addTodo, onChangeTodo, inputRef }) => {
   return (
     <Header>
-      <h2 style={{ display: 'none' }}>todo list</h2>
+      <HiddenTitle>todo list</HiddenTitle>
       <Form onSubmit={addTodo}>
-        <Input ref={inputRef} onChange={onChangeTodo} type="text" />
+        <Input autoFocus ref={inputRef} onChange={onChangeTodo} type="text" />
       </Form>
       <Btn onClick={addTodo}>
         <i className="fas fa-plus" />
@@ -32,6 +32,15 @@ const Header = styled.header`
   padding: 70px;
   background-color: #81c784;
   border-radius: 20px 20px 0 0;
+`;
+
+const HiddenTitle = styled.div`
+  position: absolute !important;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  white-space: nowrap;
 `;
 
 const Form = styled.form`

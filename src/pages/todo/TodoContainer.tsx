@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import TodoPresenter from 'pages/Todo/TodoPresenter';
+import TodoPresenter from 'pages/todo/TodoPresenter';
 import { localStorageHelper } from 'utils';
 import { ITodo } from 'utils/localStorageHelper';
+import { LS_KEY } from 'utils/constants';
 
 const TodoContainer: React.FC = () => {
   const todos: ITodo[] | null = localStorageHelper.getItem('todos');
@@ -17,12 +18,13 @@ const TodoContainer: React.FC = () => {
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLElement>,
   ) => {
     if (todo === '') {
-      alert('내용을 입력하세요');
+      console.log(resetTodos);
+      inputRef.current?.focus();
       return;
     }
     e.preventDefault();
     todos
-      ? localStorageHelper.setItem('todos', [
+      ? localStorageHelper.setItem(LS_KEY.TODOS, [
           ...todos,
           {
             id: Date.now(),
@@ -32,7 +34,7 @@ const TodoContainer: React.FC = () => {
             updatedAt: '미정',
           },
         ])
-      : localStorageHelper.setItem('todos', [
+      : localStorageHelper.setItem(LS_KEY.TODOS, [
           {
             id: Date.now(),
             taskName: todo,
@@ -47,11 +49,6 @@ const TodoContainer: React.FC = () => {
     }
     setResetTodos(todos);
   };
-
-  useEffect(() => {
-    console.log(resetTodos);
-    inputRef.current?.focus();
-  }, []);
 
   return (
     <TodoPresenter
