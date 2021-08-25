@@ -1,19 +1,30 @@
 import React from 'react';
-import { selectList } from 'utils/constants/Status';
+import styled from 'styled-components';
+
 
 interface ISelect {
    value: string;
+   selectList: string[];
    handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Select: React.FC<ISelect> = ({ value, handleChange }) => {
+
+const Select: React.FC<ISelect> = ({ value, handleChange, selectList }) => {
    return (
-      <select value={value} onChange={handleChange} >
+      <MySelect value={value} onChange={handleChange} >
          {selectList.map(option => {
             return <option key={option}>{option}</option>
          })}
-      </select>
+      </MySelect>
    )
 }
+
+const MySelect = styled.select`
+   border:none;
+   border-radius:3px;
+   outline:none;
+   font-size:14px;
+   padding: 1px;
+`
 
 export default Select;
