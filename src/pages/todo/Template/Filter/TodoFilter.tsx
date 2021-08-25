@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import mockData from 'utils/mockData.json';
 import { Select } from 'components/Select';
 import { MyDatePicker } from 'components/DatePicker';
-import { SELECT, STATUS } from 'utils/constants/Status';
+import { SELECT } from 'utils/constants';
 import styled from 'styled-components';
 import {
   filterStatus,

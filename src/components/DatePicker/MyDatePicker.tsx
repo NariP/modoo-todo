@@ -12,7 +12,7 @@ const MyDatePicker: React.FC<IDate> = ({ date, handleChange }) => {
     <DatePicker
       showPopperArrow={false}
       dateFormat="yyyy-MM-dd"
-      maxDate={new Date()}
+      // maxDate={new Date()}
       selected={date}
       onChange={handleChange}
       placeholderText="Select date"
