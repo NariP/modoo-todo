@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import TodoItem from 'pages/todo/Template/List/Item/TodoItem';
-import TodoFilter from 'pages/todo/Template/Filter/TodoFilter';
 import { ITodo } from 'utils/localStorageHelper';
 
 interface ITodoList {
@@ -12,7 +11,7 @@ interface ITodoList {
 const TodoList: React.FC<ITodoList> = ({ todos, setResetTodos }) => {
   return (
     <Body>
-      <TodoFilter />
+
       {todos?.map((todo, i) => (
         <TodoItem key={i} todo={todo} setResetTodos={setResetTodos} />
       ))}
