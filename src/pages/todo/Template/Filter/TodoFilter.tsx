@@ -41,16 +41,16 @@ const TodoFilter = () => {
   return (
     <FilterLayout>
       <Contents>
-        <Text>상태</Text>
-        <Select value={select} selectList={SELECT.STATUS} handleChange={handleSelect} />
+        <Text htmlFor="status">상태</Text>
+        <Select id={"status"} value={select} selectList={SELECT.STATUS} handleChange={handleSelect} />
       </Contents>
       <Contents>
-        <Text>중요도</Text>
-        <Select value={select} selectList={SELECT.IMPORTANT} handleChange={handleSelect} />
+        <Text htmlFor="important">중요도</Text>
+        <Select id={"important"} value={select} selectList={SELECT.IMPORTANT} handleChange={handleSelect} />
       </Contents>
       <Contents>
-        <Text>생성일</Text>
-        <MyDatePicker date={startDate} handleChange={handleDate} />
+        <Text htmlFor="startDate">생성일</Text>
+        <MyDatePicker id={"startDate"} date={startDate} handleChange={handleDate} />
       </Contents>
     </FilterLayout>
   );
@@ -70,9 +70,8 @@ const Contents = styled.div`
   flex-direction:column;
   justify-content: space-around;
   margin-right:10px;
-  /* text-align */
 `;
-const Text = styled.text`
+const Text = styled.label`
   height:100%;
   display:flex;
   font-size: 14px;

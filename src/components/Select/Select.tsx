@@ -3,15 +3,16 @@ import styled from 'styled-components';
 
 
 interface ISelect {
+   id: string;
    value: string;
    selectList: string[];
    handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 
-const Select: React.FC<ISelect> = ({ value, handleChange, selectList }) => {
+const Select: React.FC<ISelect> = ({ id, value, handleChange, selectList }) => {
    return (
-      <MySelect value={value} onChange={handleChange} >
+      <MySelect id={id} value={value} onChange={handleChange} >
          {selectList.map(option => {
             return <option key={option}>{option}</option>
          })}
