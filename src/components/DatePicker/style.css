@@ -11,6 +11,10 @@
   padding: 2px;
 }
 
+.react-datepicker {
+  position: absolute;
+  top: 1px;
+}
 .react-datepicker__header {
   background-color: #d4dfe6;
 }
