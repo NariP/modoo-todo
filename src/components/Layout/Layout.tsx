@@ -18,10 +18,14 @@ const StyledLayoutContainer = styled.div`
 `;
 
 const StyledMain = styled.main`
+  @media only screen and (max-width: 768px) {
+    max-width: 500px;
+  }
+  display: flex;
+  min-width: 360px;
+  max-width: 700px;
   background: inherit;
   color: inherit;
-  width: 1000px;
-  margin: 0 auto;
-  padding-top: 40px;
+  margin: 20px auto 32px;
 `;
 export default Layout;

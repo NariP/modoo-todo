@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import TodoPresenter from 'pages/todo/TodoPresenter';
 import { localStorageHelper } from 'utils';
 import { ITodo } from 'utils/localStorageHelper';
