@@ -5,15 +5,21 @@ import { ITodo } from 'utils/localStorageHelper';
 
 interface ITodoList {
   todos: ITodo[] | null;
-  setResetTodos: (todos: ITodo[] | null) => void;
+  setTodos: (todos: ITodo[]) => void;
 }
 
-const TodoList: React.FC<ITodoList> = ({ todos, setResetTodos }) => {
+const TodoList: React.FC<ITodoList> = ({ todos, setTodos }) => {
   return (
     <Body>
 
       {todos?.map((todo, i) => (
-        <TodoItem key={i} todo={todo} setResetTodos={setResetTodos} />
+        <TodoItem
+          key={i}
+          todos={todos}
+          todo={todo}
+          setTodos={setTodos}
+          idx={i}
+        />
       ))}
     </Body>
   );

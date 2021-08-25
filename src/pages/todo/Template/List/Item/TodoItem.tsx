@@ -1,29 +1,57 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { LS_KEY } from 'utils/constants';
 import localStorageHelper, { ITodo } from 'utils/localStorageHelper';
 
 interface ITodoItem {
+  todos: ITodo[] | null;
   todo: ITodo | null;
-  setResetTodos: (todos: ITodo[] | null) => void;
+  setTodos: (todos: ITodo[]) => void;
+  idx: number;
 }
 
-const TodoItem: React.FC<ITodoItem> = ({ todo, setResetTodos }) => {
+const TodoItem: React.FC<ITodoItem> = ({ todos, todo, setTodos, idx }) => {
   const deleteItem = () => {
     const id = todo?.id;
-    // const todos =
     const todos = localStorageHelper
       ?.getItem(LS_KEY.TODOS)
       ?.filter(todo => todo.id !== id);
     todos && localStorageHelper.setItem(LS_KEY.TODOS, [...todos]);
-    todos && setResetTodos(todos);
+    todos && setTodos(todos);
+  };
+
+  let endIdx = useRef<number | null>();
+
+  const onDragStart = (e: React.DragEvent<HTMLElement>) => {
+    e.dataTransfer.setData('idx', String(idx + 1));
+  };
+
+  const onDragOver = (e: React.DragEvent<HTMLElement> | any) => {
+    e.preventDefault();
+    endIdx.current = Number(e.target.id) + 1;
+  };
+
+  const onDrop = (e: React.DragEvent<HTMLElement>) => {
+    const idx = Number(e.dataTransfer.getData('idx'));
+    const newArr: ITodo[] | null = todos && [...todos];
+    if (newArr && todos && endIdx.current) {
+      newArr[idx - 1] = todos[endIdx.current - 1];
+      newArr[endIdx.current - 1] = todos[idx - 1];
+      setTodos(newArr);
+    }
   };
 
   return (
-    <Row>
-      <ItemWrapper>
-        <Checkbox></Checkbox>
-        <Item>{todo?.taskName}</Item>
+    <Row
+      draggable
+      onDragStart={onDragStart}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+      id={String(idx)}
+    >
+      <ItemWrapper id={String(idx)}>
+        <Checkbox id={String(idx)}></Checkbox>
+        <Item id={String(idx)}>{todo?.taskName}</Item>
       </ItemWrapper>
       <DeleteBtn id={String(todo?.id)} onClick={deleteItem}>
         <i className="fas fa-trash-alt" />
@@ -40,6 +68,7 @@ const Row = styled.ul`
   align-items: center;
   padding: 15px 20px;
   margin: 0;
+  box-shadow: 2px 2px 2px #00000020;
 `;
 
 const ItemWrapper = styled.li`

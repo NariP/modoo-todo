@@ -11,7 +11,7 @@ interface ITodoPresenter {
   ) => void;
   onChangeTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputRef: RefObject<HTMLInputElement>;
-  setResetTodos: (todos: ITodo[] | null) => void;
+  setTodos: (todos: ITodo[]) => void;
 }
 
 const TodoPresenter: React.FC<ITodoPresenter> = ({
@@ -19,7 +19,7 @@ const TodoPresenter: React.FC<ITodoPresenter> = ({
   addTodo,
   onChangeTodo,
   inputRef,
-  setResetTodos,
+  setTodos,
 }) => {
   return (
     <Wrapper>
@@ -28,7 +28,7 @@ const TodoPresenter: React.FC<ITodoPresenter> = ({
         onChangeTodo={onChangeTodo}
         inputRef={inputRef}
       />
-      <TodoList todos={todos} setResetTodos={setResetTodos} />
+      <TodoList todos={todos} setTodos={setTodos} />
     </Wrapper>
   );
 };

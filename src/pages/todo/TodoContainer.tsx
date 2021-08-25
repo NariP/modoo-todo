@@ -5,8 +5,9 @@ import { ITodo } from 'utils/localStorageHelper';
 import { LS_KEY } from 'utils/constants';
 
 const TodoContainer: React.FC = () => {
-  const todos: ITodo[] | null = localStorageHelper.getItem('todos');
-  const [resetTodos, setResetTodos] = useState<ITodo[] | null>(todos);
+  const [todos, setTodos] = useState<ITodo[] | null>(
+    localStorageHelper.getItem(LS_KEY.TODOS),
+  );
   const [todo, setTodo] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -17,12 +18,11 @@ const TodoContainer: React.FC = () => {
   const addTodo = (
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLElement>,
   ) => {
+    e.preventDefault();
     if (todo === '') {
-      console.log(resetTodos);
       inputRef.current?.focus();
       return;
     }
-    e.preventDefault();
     todos
       ? localStorageHelper.setItem(LS_KEY.TODOS, [
           ...todos,
@@ -43,11 +43,11 @@ const TodoContainer: React.FC = () => {
             updatedAt: '미정',
           },
         ]);
+    const newTodos: ITodo[] | null = localStorageHelper.getItem(LS_KEY.TODOS);
+    setTodos(newTodos);
     if (inputRef.current) {
       inputRef.current.value = '';
-      setTodo('');
     }
-    setResetTodos(todos);
   };
 
   return (
@@ -56,7 +56,7 @@ const TodoContainer: React.FC = () => {
       onChangeTodo={onChangeTodo}
       addTodo={addTodo}
       inputRef={inputRef}
-      setResetTodos={setResetTodos}
+      setTodos={setTodos}
     />
   );
 };
