@@ -10,6 +10,9 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: NanumSquareRound, sans-serif;
   }
+  i {
+  font-style: normal;
+  }
   input {
   border: none;
   outline: none;
