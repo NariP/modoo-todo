@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { LS_KEY } from 'utils/constants';
 import localStorageHelper, { ITodo } from 'utils/localStorageHelper';
+import { Icon } from 'components/Icon';
 
 interface ITodoItem {
   todos: ITodo[] | null;
@@ -50,11 +51,11 @@ const TodoItem: React.FC<ITodoItem> = ({ todos, todo, setTodos, idx }) => {
       id={String(idx)}
     >
       <ItemWrapper id={String(idx)}>
-        <Checkbox id={String(idx)}></Checkbox>
+        <Checkbox id={String(idx)} />
         <Item id={String(idx)}>{todo?.taskName}</Item>
       </ItemWrapper>
       <DeleteBtn id={String(todo?.id)} onClick={deleteItem}>
-        <i className="fas fa-trash-alt" />
+        <Icon classes="fas fa-trash-alt" />
       </DeleteBtn>
     </Row>
   );

@@ -2,6 +2,7 @@ import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import TodoFilter from 'pages/todo/Template/Filter/TodoFilter';
 import { ITodo } from 'utils/localStorageHelper';
+import { Icon } from 'components/Icon';
 
 interface ITodoHead {
   todo: string;
@@ -24,8 +25,8 @@ const TodoHead: React.FC<ITodoHead> = ({
 }) => {
   return (
     <Header>
-      <Wrap direction={'column'}>
-        <Wrap direction={'row'}>
+      <Wrap direction="column">
+        <Wrap direction="row">
           <HiddenTitle>todo list</HiddenTitle>
           <Form onSubmit={addTodo} id="todoForm">
             <Input
@@ -37,7 +38,7 @@ const TodoHead: React.FC<ITodoHead> = ({
             />
           </Form>
           <Btn form="todoForm" type="submit">
-            <i className="fas fa-plus" />
+            <Icon classes="fas fa-plus" />
           </Btn>
         </Wrap>
         <TodoFilter todos={todos} filter={filter} setFilter={setFilter} />
