@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import TodoPresenter from 'pages/todo/TodoPresenter';
-import { localStorageHelper } from 'utils';
+import { localStorageHelper, getFormattedDate } from 'utils';
 import { ITodo } from 'utils/localStorageHelper';
 import { LS_KEY } from 'utils/constants';
 
@@ -9,6 +9,7 @@ const TodoContainer: React.FC = () => {
     localStorageHelper.getItem(LS_KEY.TODOS),
   );
   const [todo, setTodo] = useState<string>('');
+  const [filter, setFilter] = useState<ITodo[] | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onChangeTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,9 +25,8 @@ const TodoContainer: React.FC = () => {
     return true;
   };
 
-  const setDate = (): string => {
-    const date = String(new Date()).split(' ').slice(0, 3).join(' ');
-    return date;
+  const setDate = (date: Date): string => {
+    return getFormattedDate(date)
   };
 
   const updateTodos = (): void => {
@@ -34,7 +34,7 @@ const TodoContainer: React.FC = () => {
       id: Date.now(),
       taskName: todo,
       status: '미정',
-      createdAt: setDate(),
+      createdAt: setDate(new Date()),
       updatedAt: '미정',
     };
     todos ? setTodos([...todos, { ...newTodo }]) : setTodos([{ ...newTodo }]);
@@ -60,11 +60,13 @@ const TodoContainer: React.FC = () => {
   return (
     <TodoPresenter
       todos={todos}
+      setTodos={setTodos}
       todo={todo}
       onChangeTodo={onChangeTodo}
       addTodo={addTodo}
       inputRef={inputRef}
-      setTodos={setTodos}
+      filter={filter}
+      setFilter={setFilter}
     />
   );
 };

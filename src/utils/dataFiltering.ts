@@ -1,7 +1,6 @@
 import { ITodo } from './localStorageHelper';
 import { STATUS } from './constants/Status';
 import { getFormattedDate } from 'utils';
-
 interface IStatus {
   [key: string]: string;
 }
@@ -26,14 +25,9 @@ export const filterStatus = (status: string, data: ITodo[]): ITodo[] => {
 };
 
 export const filterDate = (date: null | Date, data: ITodo[]): ITodo[] => {
-  let [selectMonth, selectDate] = ['', ''];
-  if (date) {
-    selectMonth = getFormattedDate((date?.getMonth() + 1).toString());
-    selectDate = getFormattedDate(date?.getDate().toString().toString());
-  }
-  let selectCalender =
-    date?.getFullYear() + '-' + selectMonth + '-' + selectDate;
-  return data.filter((Itodo: ITodo) => Itodo.createdAt === selectCalender);
+  if (!date) return [];
+  let selectedDate = getFormattedDate(date);
+  return data.filter((Itodo: ITodo) => Itodo.createdAt === selectedDate);
 };
 
 export const filterAll = (
