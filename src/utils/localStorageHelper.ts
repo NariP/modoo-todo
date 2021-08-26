@@ -16,6 +16,7 @@ export interface ITodo {
   status: string;
   createdAt: string;
   updatedAt: string;
+  important?: string;
 }
 interface ILocalStorageHelper {
   getItem: (key: string) => ITodo[] | null;
