@@ -9,7 +9,7 @@ const CloseButton: React.FC<ICloseButtonProps> = ({ toggleModal }) => {
   };
   return (
     <button type="button" onClick={clickHandler}>
-      <Icon>✖️</Icon>
+      <Icon classes="fa fa-times" />
     </button>
   );
 };
