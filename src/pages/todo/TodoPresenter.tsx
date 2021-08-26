@@ -6,6 +6,7 @@ import { ITodo } from 'utils/localStorageHelper';
 
 interface ITodoPresenter {
   todos: ITodo[] | null;
+  todo: string;
   addTodo: (e: React.FormEvent<HTMLFormElement>) => void;
   onChangeTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputRef: RefObject<HTMLInputElement>;
@@ -14,6 +15,7 @@ interface ITodoPresenter {
 
 const TodoPresenter: React.FC<ITodoPresenter> = ({
   todos,
+  todo,
   addTodo,
   onChangeTodo,
   inputRef,
@@ -23,6 +25,7 @@ const TodoPresenter: React.FC<ITodoPresenter> = ({
     <Wrapper>
       <TodoHead
         addTodo={addTodo}
+        todo={todo}
         onChangeTodo={onChangeTodo}
         inputRef={inputRef}
       />

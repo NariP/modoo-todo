@@ -2,12 +2,18 @@ import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import TodoFilter from 'pages/todo/Template/Filter/TodoFilter';
 interface ITodoHead {
+  todo: string;
   addTodo: (e: React.FormEvent<HTMLFormElement>) => void;
   onChangeTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputRef: RefObject<HTMLInputElement>;
 }
 
-const TodoHead: React.FC<ITodoHead> = ({ addTodo, onChangeTodo, inputRef }) => {
+const TodoHead: React.FC<ITodoHead> = ({
+  todo,
+  addTodo,
+  onChangeTodo,
+  inputRef,
+}) => {
   return (
     <Header>
       <Wrap direction={'column'}>
@@ -16,6 +22,7 @@ const TodoHead: React.FC<ITodoHead> = ({ addTodo, onChangeTodo, inputRef }) => {
           <Form onSubmit={addTodo} id="todoForm">
             <Input
               autoFocus
+              value={todo}
               ref={inputRef}
               onChange={onChangeTodo}
               type="text"

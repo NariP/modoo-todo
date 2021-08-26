@@ -18,6 +18,7 @@ const TodoContainer: React.FC = () => {
   const validateTodo = (): boolean => {
     const validatedTodo = todo.trim();
     if (validatedTodo === '') {
+      inputRef.current?.focus();
       return false;
     }
     return true;
@@ -39,7 +40,7 @@ const TodoContainer: React.FC = () => {
     todos ? setTodos([...todos, { ...newTodo }]) : setTodos([{ ...newTodo }]);
   };
 
-  const updateStorage = (): void => {
+  const updateStorage = (todos: ITodo[] | null): void => {
     todos && localStorageHelper.setItem(LS_KEY.TODOS, todos);
   };
 
@@ -47,20 +48,19 @@ const TodoContainer: React.FC = () => {
     e.preventDefault();
     if (!validateTodo()) return;
     updateTodos();
-    updateStorage();
+    updateStorage(todos);
     setTodo('');
-    if (inputRef.current) {
-      inputRef.current.value = '';
-    }
   };
 
   useEffect(() => {
+    updateStorage(todos);
     inputRef.current?.focus();
   }, [todos]);
 
   return (
     <TodoPresenter
       todos={todos}
+      todo={todo}
       onChangeTodo={onChangeTodo}
       addTodo={addTodo}
       inputRef={inputRef}
