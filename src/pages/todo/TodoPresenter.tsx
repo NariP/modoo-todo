@@ -6,29 +6,37 @@ import { ITodo } from 'utils/localStorageHelper';
 
 interface ITodoPresenter {
   todos: ITodo[] | null;
-  addTodo: (
-    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLElement>,
-  ) => void;
+  todo: string;
+  filter: ITodo[] | null;
+  setFilter: (todos: ITodo[] | null) => void;
+  addTodo: (e: React.FormEvent<HTMLFormElement>) => void;
   onChangeTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputRef: RefObject<HTMLInputElement>;
-  setResetTodos: (todos: ITodo[] | null) => void;
+  setTodos: (todos: ITodo[] | null) => void;
 }
 
 const TodoPresenter: React.FC<ITodoPresenter> = ({
   todos,
+  todo,
   addTodo,
   onChangeTodo,
   inputRef,
-  setResetTodos,
+  setTodos,
+  filter,
+  setFilter
 }) => {
   return (
     <Wrapper>
       <TodoHead
         addTodo={addTodo}
+        todo={todo}
         onChangeTodo={onChangeTodo}
         inputRef={inputRef}
+        todos={todos}
+        filter={filter}
+        setFilter={setFilter}
       />
-      <TodoList todos={todos} setResetTodos={setResetTodos} />
+      <TodoList todos={todos} setTodos={setTodos} filter={filter} />
     </Wrapper>
   );
 };

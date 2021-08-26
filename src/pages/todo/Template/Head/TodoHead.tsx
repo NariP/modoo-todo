@@ -1,28 +1,46 @@
 import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import TodoFilter from 'pages/todo/Template/Filter/TodoFilter';
+import { ITodo } from 'utils/localStorageHelper';
+
 interface ITodoHead {
-  addTodo: (
-    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLElement>,
-  ) => void;
+  todo: string;
+  todos: ITodo[] | null;
+  filter: ITodo[] | null;
+  setFilter: (todos: ITodo[] | null) => void;
+  addTodo: (e: React.FormEvent<HTMLFormElement>) => void;
   onChangeTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputRef: RefObject<HTMLInputElement>;
 }
 
-const TodoHead: React.FC<ITodoHead> = ({ addTodo, onChangeTodo, inputRef }) => {
+const TodoHead: React.FC<ITodoHead> = ({
+  todo,
+  todos,
+  filter,
+  setFilter,
+  addTodo,
+  onChangeTodo,
+  inputRef,
+}) => {
   return (
     <Header>
-      <Wrap direction={"column"}>
-        <Wrap direction={"row"}>
+      <Wrap direction={'column'}>
+        <Wrap direction={'row'}>
           <HiddenTitle>todo list</HiddenTitle>
-          <Form onSubmit={addTodo}>
-            <Input autoFocus ref={inputRef} onChange={onChangeTodo} type="text" />
+          <Form onSubmit={addTodo} id="todoForm">
+            <Input
+              autoFocus
+              value={todo}
+              ref={inputRef}
+              onChange={onChangeTodo}
+              type="text"
+            />
           </Form>
-          <Btn onClick={addTodo}>
+          <Btn form="todoForm" type="submit">
             <i className="fas fa-plus" />
           </Btn>
         </Wrap>
-        <TodoFilter />
+        <TodoFilter todos={todos} filter={filter} setFilter={setFilter} />
       </Wrap>
     </Header>
   );
@@ -30,12 +48,12 @@ const TodoHead: React.FC<ITodoHead> = ({ addTodo, onChangeTodo, inputRef }) => {
 
 export default TodoHead;
 
-const Wrap = styled.div <{ direction: string }>`
-  display:flex;
-  flex-direction: ${(props) => props.direction};
-  width:100%;
-  height:100%;
-`
+const Wrap = styled.div<{ direction: string }>`
+  display: flex;
+  flex-direction: ${props => props.direction};
+  width: 100%;
+  height: 100%;
+`;
 
 const Header = styled.header`
   display: flex;

@@ -1,62 +1,72 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import TodoPresenter from 'pages/todo/TodoPresenter';
-import { localStorageHelper } from 'utils';
+import { localStorageHelper, getFormattedDate } from 'utils';
 import { ITodo } from 'utils/localStorageHelper';
 import { LS_KEY } from 'utils/constants';
 
 const TodoContainer: React.FC = () => {
-  const todos: ITodo[] | null = localStorageHelper.getItem('todos');
-  const [resetTodos, setResetTodos] = useState<ITodo[] | null>(todos);
+  const [todos, setTodos] = useState<ITodo[] | null>(
+    localStorageHelper.getItem(LS_KEY.TODOS),
+  );
   const [todo, setTodo] = useState<string>('');
+  const [filter, setFilter] = useState<ITodo[] | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onChangeTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodo(e.target.value);
   };
 
-  const addTodo = (
-    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLElement>,
-  ) => {
-    if (todo === '') {
-      console.log(resetTodos);
+  const validateTodo = (): boolean => {
+    const validatedTodo = todo.trim();
+    if (validatedTodo === '') {
       inputRef.current?.focus();
-      return;
+      return false;
     }
-    e.preventDefault();
-    todos
-      ? localStorageHelper.setItem(LS_KEY.TODOS, [
-          ...todos,
-          {
-            id: Date.now(),
-            taskName: todo,
-            status: '미정',
-            createdAt: String(new Date()),
-            updatedAt: '미정',
-          },
-        ])
-      : localStorageHelper.setItem(LS_KEY.TODOS, [
-          {
-            id: Date.now(),
-            taskName: todo,
-            status: '미정',
-            createdAt: String(new Date()),
-            updatedAt: '미정',
-          },
-        ]);
-    if (inputRef.current) {
-      inputRef.current.value = '';
-      setTodo('');
-    }
-    setResetTodos(todos);
+    return true;
   };
+
+  const setDate = (date: Date): string => {
+    return getFormattedDate(date)
+  };
+
+  const updateTodos = (): void => {
+    const newTodo: ITodo = {
+      id: Date.now(),
+      taskName: todo,
+      status: '미정',
+      createdAt: setDate(new Date()),
+      updatedAt: '미정',
+    };
+    todos ? setTodos([...todos, { ...newTodo }]) : setTodos([{ ...newTodo }]);
+  };
+
+  const updateStorage = (todos: ITodo[] | null): void => {
+    todos && localStorageHelper.setItem(LS_KEY.TODOS, todos);
+  };
+
+  const addTodo = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!validateTodo()) return;
+    updateTodos();
+    updateStorage(todos);
+    setTodo('');
+  };
+
+  useEffect(() => {
+    updateStorage(todos);
+    inputRef.current?.focus();
+  }, [todos]);
 
   return (
     <TodoPresenter
       todos={todos}
+      setTodos={setTodos}
+      todo={todo}
       onChangeTodo={onChangeTodo}
       addTodo={addTodo}
       inputRef={inputRef}
-      setResetTodos={setResetTodos}
+      filter={filter}
+      setFilter={setFilter}
     />
   );
 };
