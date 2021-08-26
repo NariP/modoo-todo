@@ -1,19 +1,17 @@
 <p align='middle'>
   <a href='https://modo-todo.netlify.app/'>
-    <img src='https://user-images.githubusercontent.com/40657327/130925827-0613a7cc-b2d6-4275-bda3-7a87bc4b2eb6.png' width="300px;" alt="LiveMD" />
+    <img src='https://user-images.githubusercontent.com/40657327/130927501-d190f743-d070-4c97-a617-b66397035fa1.png' width="300px;" alt="LiveMD" />
   </a>
-</p>
-<h2 align='middle'><a href='https://modo-todo.netlify.app/'> https://modo-todo.netlify.app/</a></h2>
-<p align="middle">
+  <br/>
 <img src="https://img.shields.io/github/languages/top/chyeon97/solarconnect-todo-list?color=lightblue&logo=Typescript"> </img>
 <img src="https://img.shields.io/github/repo-size/chyeon97/solarconnect-todo-list?color=%25&logo=Github"></img>
+<h2 align='middle'><a href='https://modo-todo.netlify.app/'>https://modo-todo.netlify.app/</a></h2>
 </p>
 
-<br/>
 
 ## 📌 프젝젝트 소개
 
-### 📋 프리온보딩 코스 모두 컴퍼니
+### 📋 프리온보딩 코스 모두의컴퍼니
 
 > Todo List App 구현하기
 
