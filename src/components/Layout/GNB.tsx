@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ToggleButton } from 'components/ToggleButton';
+import { ToggleButton } from 'components/ToggleSlider';
 import { Icon } from 'components/Icon';
 
 interface IGnbProps {
@@ -11,13 +11,20 @@ const GNB: React.FC<IGnbProps> = ({ setTheme }) => {
     <StyledHeader>
       <StyledLogo>MODOO</StyledLogo>
       <StyledToggleButtonContainer>
-        <Icon>☀️</Icon>
+        <StyledLabel htmlFor={TOGGLE_THEME}>
+          <Icon>☀️</Icon>
+        </StyledLabel>
         <ToggleButton setTheme={setTheme} />
-        <Icon>🌙</Icon>
+        <StyledLabel htmlFor={TOGGLE_THEME}>
+          <Icon>🌙</Icon>
+        </StyledLabel>
       </StyledToggleButtonContainer>
     </StyledHeader>
   );
 };
+const StyledLabel = styled.label`
+  cursor: pointer;
+`;
 const StyledHeader = styled.header`
   background: inherit;
   color: inherit;
@@ -25,6 +32,7 @@ const StyledHeader = styled.header`
   box-shadow: 0 3px 5px rgba(153, 153, 153, 0.3);
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   position: sticky;
   padding: 1em 3em;
@@ -39,4 +47,6 @@ const StyledToggleButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+// NOTE: toggle Button 컴포넌트랑 묶어서 상수화하기
+const TOGGLE_THEME = 'toggleTheme';
 export default GNB;
