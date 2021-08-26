@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { LS_KEY } from 'utils/constants';
 import localStorageHelper, { ITodo } from 'utils/localStorageHelper';
 import TodoSelector from './Selector/TodoSelector';
+import { Icon } from 'components/Icon';
 
 interface ITodoItem {
   todos: ITodo[] | null;
@@ -55,7 +56,7 @@ const TodoItem: React.FC<ITodoItem> = ({ todos, todo, setTodos, idx }) => {
         <ModalWrapper>
           <ModalHeader>
             <ModalBtn onClick={toggleModal}>
-              <i className="fas fa-times-circle" />
+              <Icon classes="fas fa-times-circle" />
             </ModalBtn>
           </ModalHeader>
           <ModalText>{todo?.taskName}</ModalText>
@@ -73,7 +74,7 @@ const TodoItem: React.FC<ITodoItem> = ({ todos, todo, setTodos, idx }) => {
         </ItemWrapper>
         <TodoSelector todos={todos} todo={todo} setTodos={setTodos} idx={idx} />
         <DeleteBtn id={String(todo?.id)} onClick={deleteItem}>
-          <i className="fas fa-trash-alt" />
+          <Icon classes="fas fa-trash-alt" />
         </DeleteBtn>
       </Row>
     </>
