@@ -1,7 +1,9 @@
-import React, { useRef } from 'react';
+import { Modal } from 'components/Modal';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { LS_KEY } from 'utils/constants';
 import localStorageHelper, { ITodo } from 'utils/localStorageHelper';
+import TodoSelector from './Selector/TodoSelector';
 
 interface ITodoItem {
   todos: ITodo[] | null;
@@ -11,7 +13,13 @@ interface ITodoItem {
 }
 
 const TodoItem: React.FC<ITodoItem> = ({ todos, todo, setTodos, idx }) => {
-  const deleteItem = () => {
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const toggleModal = () => {
+    setOpenModal(prev => !prev);
+  };
+
+  const deleteItem = (): void => {
     const id = todo?.id;
     const todos = localStorageHelper
       ?.getItem(LS_KEY.TODOS)
@@ -42,21 +50,33 @@ const TodoItem: React.FC<ITodoItem> = ({ todos, todo, setTodos, idx }) => {
   };
 
   return (
-    <Row
-      draggable
-      onDragStart={onDragStart}
-      onDragOver={onDragOver}
-      onDrop={onDrop}
-      id={String(idx)}
-    >
-      <ItemWrapper id={String(idx)}>
-        <Checkbox id={String(idx)}></Checkbox>
-        <Item id={String(idx)}>{todo?.taskName}</Item>
-      </ItemWrapper>
-      <DeleteBtn id={String(todo?.id)} onClick={deleteItem}>
-        <i className="fas fa-trash-alt" />
-      </DeleteBtn>
-    </Row>
+    <>
+      <Modal open={openModal} toggleModal={toggleModal}>
+        <ModalWrapper>
+          <ModalHeader>
+            <ModalBtn onClick={toggleModal}>
+              <i className="fas fa-times-circle" />
+            </ModalBtn>
+          </ModalHeader>
+          <ModalText>{todo?.taskName}</ModalText>
+        </ModalWrapper>
+      </Modal>
+      <Row
+        draggable
+        onDragStart={onDragStart}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
+        id={String(idx)}
+      >
+        <ItemWrapper onClick={toggleModal} id={String(idx)}>
+          <Item id={String(idx)}>{todo?.taskName}</Item>
+        </ItemWrapper>
+        <TodoSelector todos={todos} todo={todo} setTodos={setTodos} idx={idx} />
+        <DeleteBtn id={String(todo?.id)} onClick={deleteItem}>
+          <i className="fas fa-trash-alt" />
+        </DeleteBtn>
+      </Row>
+    </>
   );
 };
 
@@ -72,9 +92,10 @@ const Row = styled.ul`
 `;
 
 const ItemWrapper = styled.li`
-  width: 90%;
+  width: 50%;
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const Item = styled.div`
@@ -94,11 +115,29 @@ const DeleteBtn = styled.button`
   }
 `;
 
-const Checkbox = styled.button`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid gray;
-  background-color: transparent;
-  margin-right: 25px;
+const ModalWrapper = styled.div`
+  position: fixed;
+  top: 30vh;
+  width: 400px;
+  background-color: beige;
+  padding-bottom: 20px;
+  border-radius: 20px;
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 8px;
+`;
+
+const ModalBtn = styled.button`
+  font-size: 33px;
+`;
+
+const ModalText = styled.div`
+  font-size: 25px;
+  padding: 8px 30px;
+  word-wrap: break-word;
+  height: 200px;
+  overflow-y: auto;
 `;

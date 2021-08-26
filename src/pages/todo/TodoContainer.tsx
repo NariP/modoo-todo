@@ -3,6 +3,7 @@ import TodoPresenter from 'pages/todo/TodoPresenter';
 import { localStorageHelper, getFormattedDate } from 'utils';
 import { ITodo } from 'utils/localStorageHelper';
 import { LS_KEY } from 'utils/constants';
+import { IMPORTANT, STATUS } from 'utils/constants/Status';
 
 const TodoContainer: React.FC = () => {
   const [todos, setTodos] = useState<ITodo[] | null>(
@@ -26,16 +27,17 @@ const TodoContainer: React.FC = () => {
   };
 
   const setDate = (date: Date): string => {
-    return getFormattedDate(date)
+    return getFormattedDate(date);
   };
 
   const updateTodos = (): void => {
     const newTodo: ITodo = {
       id: Date.now(),
       taskName: todo,
-      status: '미정',
+      status: STATUS.NOT_STARTED,
       createdAt: setDate(new Date()),
       updatedAt: '미정',
+      important: IMPORTANT.MIDDLE,
     };
     todos ? setTodos([...todos, { ...newTodo }]) : setTodos([{ ...newTodo }]);
   };
@@ -48,7 +50,6 @@ const TodoContainer: React.FC = () => {
     e.preventDefault();
     if (!validateTodo()) return;
     updateTodos();
-    updateStorage(todos);
     setTodo('');
   };
 

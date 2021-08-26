@@ -1,8 +1,8 @@
 export const STATUS = {
   ALL: '전체',
   FINISHED: '완료',
-  ONGOING: '진행중',
-  NOT_STARTED: '시작안함',
+  ONGOING: '진행',
+  NOT_STARTED: '대기',
 };
 
 export const IMPORTANT = {
