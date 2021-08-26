@@ -1,4 +1,14 @@
-const getFormattedDate = (date: string): string => {
-  return date.length < 2 ? '0' + date : date;
+const getFormattedDate = (date: number): string => {
+  return date.toString().length < 2 ? '0' + date.toString() : date.toString();
 };
-export default getFormattedDate;
+
+const getyyyyMMdd = (date: Date): string => {
+  return (
+    date.getFullYear() +
+    '-' +
+    getFormattedDate(date.getMonth() + 1) +
+    '-' +
+    getFormattedDate(date.getDate())
+  );
+};
+export default getyyyyMMdd;

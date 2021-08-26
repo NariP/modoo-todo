@@ -1,8 +1,13 @@
 import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import TodoFilter from 'pages/todo/Template/Filter/TodoFilter';
+import { ITodo } from 'utils/localStorageHelper';
+
 interface ITodoHead {
   todo: string;
+  todos: ITodo[] | null;
+  filter: ITodo[] | null;
+  setFilter: (todos: ITodo[] | null) => void;
   addTodo: (e: React.FormEvent<HTMLFormElement>) => void;
   onChangeTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputRef: RefObject<HTMLInputElement>;
@@ -10,6 +15,9 @@ interface ITodoHead {
 
 const TodoHead: React.FC<ITodoHead> = ({
   todo,
+  todos,
+  filter,
+  setFilter,
   addTodo,
   onChangeTodo,
   inputRef,
@@ -32,7 +40,7 @@ const TodoHead: React.FC<ITodoHead> = ({
             <i className="fas fa-plus" />
           </Btn>
         </Wrap>
-        <TodoFilter />
+        <TodoFilter todos={todos} filter={filter} setFilter={setFilter} />
       </Wrap>
     </Header>
   );

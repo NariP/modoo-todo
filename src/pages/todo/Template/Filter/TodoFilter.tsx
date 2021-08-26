@@ -4,39 +4,46 @@ import { Select } from 'components/Select';
 import { MyDatePicker } from 'components/DatePicker';
 import { SELECT } from 'utils/constants';
 import styled from 'styled-components';
+import { ITodo } from 'utils/localStorageHelper';
+
 import {
   filterStatus,
   filterDate,
-  OriginData,
   filterAll,
 } from 'utils/dataFiltering';
 
-const TodoFilter = () => {
+interface ITodoFilter {
+  todos: ITodo[] | null;
+  filter: ITodo[] | null;
+  setFilter: (todos: ITodo[] | null) => void;
+}
+
+const TodoFilter: React.FC<ITodoFilter> = ({ todos, filter, setFilter }) => {
   const [select, setSelect] = useState<string>('전체');
-  const [startDate, setStartDate] = useState<null | Date>(null);
+  const [createDate, setCreateDate] = useState<null | Date>(null);
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelect(e.target.value);
   };
   const handleDate = (e: Date) => {
-    setStartDate(e);
+    setCreateDate(e);
   };
   useEffect(() => {
-    if (select === '전체' && !startDate) {
-      console.log(OriginData(mockData));
+    if (select === '전체' && !createDate) {
+      todos && setFilter(null);
     }
     // 상태 필터
-    else if (select !== '전체' && !startDate) {
-      console.log(filterStatus(select, mockData));
+    else if (select !== '전체' && !createDate) {
+      todos && console.log(filterStatus(select, todos));
     }
     // 생성일 필터
-    else if (select === '전체' && startDate) {
-      console.log(filterDate(startDate, mockData));
+    else if (select === '전체' && createDate) {
+      todos && setFilter(filterDate(createDate, todos));
     }
     // 상태, 생성일 필터
     else {
-      console.log(filterAll(select, startDate, mockData));
+      console.log(filterAll(select, createDate, mockData));
     }
-  }, [select, startDate]);
+  }, [select, createDate]);
 
   return (
     <FilterLayout>
@@ -49,8 +56,8 @@ const TodoFilter = () => {
         <Select id={"important"} value={select} selectList={SELECT.IMPORTANT} handleChange={handleSelect} />
       </Contents>
       <Contents>
-        <Text htmlFor="startDate">생성일</Text>
-        <MyDatePicker id={"startDate"} date={startDate} handleChange={handleDate} />
+        <Text htmlFor="createDate">생성일</Text>
+        <MyDatePicker id={"createDate"} date={createDate} handleChange={handleDate} />
       </Contents>
     </FilterLayout>
   );
