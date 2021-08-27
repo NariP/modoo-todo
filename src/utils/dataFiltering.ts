@@ -11,6 +11,21 @@ const convertStatus: IStatus = {
   [STATUS.ALL]: 'ALL',
 };
 
+export const getFilteredData = (
+  option: string,
+  select: string | any,
+  createDate: Date | null,
+  data: ITodo[],
+): ITodo[] => {
+  if ((!option && !createDate) || (select === STATUS.ALL && !createDate))
+    return data;
+
+  console.log({ option, select, createDate, data });
+
+  data.forEach((item: ITodo) => console.log(item[option] === select));
+  return data.filter((item: ITodo) => item[option] === select);
+};
+
 export const OriginData = (data: ITodo[]): ITodo[] => {
   return data;
 };

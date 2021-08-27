@@ -1,4 +1,5 @@
 import { MouseEvent, useEffect, useRef, useState } from 'react';
+import { MOUSE_EVENT } from 'utils/constants';
 
 const useDraggable = (location: { x: number; y: number }) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -38,15 +39,16 @@ const useDraggable = (location: { x: number; y: number }) => {
       }, 10);
     };
     // NOTE: addEventListener 타입 찾기
-    window.addEventListener<any>(MOUSE_MOVE, throttledFunc);
-    window.addEventListener(MOUSE_UP, mouseUpHandler);
+    // NOTE: clientX, Y 따로 타이핑 해보기
+    window.addEventListener<any>(MOUSE_EVENT.MOVE, throttledFunc);
+    window.addEventListener(MOUSE_EVENT.UP, mouseUpHandler);
 
     return () => {
-      window.removeEventListener<any>(MOUSE_MOVE, throttledFunc);
-      window.removeEventListener(MOUSE_UP, mouseUpHandler);
+      window.removeEventListener<any>(MOUSE_EVENT.MOVE, throttledFunc);
+      window.removeEventListener(MOUSE_EVENT.UP, mouseUpHandler);
     };
   }, [mouseDown, modalRef, modalOffset, modalLocation]);
   return { modalRef, modalLocation, mouseDownHandler };
 };
-const [MOUSE_MOVE, MOUSE_UP] = ['mousemove', 'mouseup'];
+
 export default useDraggable;

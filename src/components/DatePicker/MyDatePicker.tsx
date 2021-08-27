@@ -1,11 +1,14 @@
 import DatePicker from 'react-datepicker';
 import React from 'react';
-import 'react-datepicker/dist/react-datepicker.css'
-import './style.css'
+import 'react-datepicker/dist/react-datepicker.css';
+import './style.css';
 interface IDate {
   id: string;
   date: null | Date;
-  handleChange: (e: Date) => void;
+  handleChange: (
+    e: Date,
+    event: React.SyntheticEvent<any, Event> | undefined,
+  ) => void;
 }
 
 const MyDatePicker: React.FC<IDate> = ({ id, date, handleChange }) => {
@@ -18,9 +21,9 @@ const MyDatePicker: React.FC<IDate> = ({ id, date, handleChange }) => {
       selected={date}
       onChange={handleChange}
       placeholderText="Select date"
+      data-name="date"
     />
   );
-
-}
+};
 
 export default MyDatePicker;
