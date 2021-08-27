@@ -67,7 +67,7 @@
 
 |팀원|구현기능|
 |------|---|
-|박나리|Todo 수정 <br/> 다크모드|
+|박나리|Todo 수정 <br/> 다크모드 <br/> Draggble Modal|
 |박채연|Todo 필터|
 |최지욱|Todo 조회, 추가, 삭제 <br/> Drag&Drop|
       
