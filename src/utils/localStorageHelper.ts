@@ -16,6 +16,7 @@ export interface ITodo {
   status: string;
   createdAt: string;
   updatedAt: string;
+  important?: string;
   [key: string]: string | any;
 }
 
