@@ -24,6 +24,7 @@ const StyledMain = styled.main`
   display: flex;
   min-width: 360px;
   max-width: 700px;
+  min-height: 100vh;
   background: inherit;
   color: inherit;
   margin: 20px auto 32px;

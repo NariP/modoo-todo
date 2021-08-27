@@ -2,6 +2,7 @@ import DatePicker from 'react-datepicker';
 import React from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import './style.css';
+import styled from 'styled-components';
 interface IDate {
   id: string;
   date: null | Date;
@@ -13,7 +14,7 @@ interface IDate {
 
 const MyDatePicker: React.FC<IDate> = ({ id, date, handleChange }) => {
   return (
-    <DatePicker
+    <StyledPicker
       id={id}
       showPopperArrow={false}
       dateFormat="yyyy-MM-dd"
@@ -21,9 +22,12 @@ const MyDatePicker: React.FC<IDate> = ({ id, date, handleChange }) => {
       selected={date}
       onChange={handleChange}
       placeholderText="Select date"
-      data-name="date"
+      autoComplete="off"
     />
   );
 };
-
+const StyledPicker = styled(DatePicker)`
+  background: ${props => props.theme.color.bgColor};
+  color: ${props => props.theme.color.textColor};
+`;
 export default MyDatePicker;

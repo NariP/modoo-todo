@@ -5,71 +5,46 @@ import { MyDatePicker } from 'components/DatePicker';
 import { SELECT } from 'utils/constants';
 import styled from 'styled-components';
 import { ITodo } from 'utils/localStorageHelper';
+import { getUnique } from './utils';
 
-import {
-  filterStatus,
-  filterDate,
-  filterAll,
-  getFilteredData,
-} from 'utils/dataFiltering';
+import { getFilteredData } from 'utils/dataFiltering';
+import { getFormattedDate } from 'utils';
+import { Icon } from 'components/Icon';
 
 interface ITodoFilter {
   todos: ITodo[] | null;
   filter: ITodo[] | null;
   setFilter: (todos: ITodo[] | null) => void;
 }
-// [{option, select}]
-interface ISelected {
+
+export interface ISelected {
   option: string;
   select: string | Date | null;
 }
 const TodoFilter: React.FC<ITodoFilter> = ({ todos, filter, setFilter }) => {
   const [select, setSelect] = useState<string>('전체');
-  const [option, setOption] = useState('');
   const [createDate, setCreateDate] = useState<null | Date>(null);
   const [selected, setSelected] = useState<[] | ISelected[]>([]);
-  const getUnique = (
-    optionName: string,
-    selected: [] | ISelected[],
-  ): [] | ISelected[] => {
-    return !selected
-      ? selected
-      : selected.filter(item => item.option !== optionName);
-  };
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelect(e.target.value);
-    setOption(e.target.id);
     const res = getUnique(e.target.id, selected);
     setSelected([...res, { option: e.target.id, select: e.target.value }]);
   };
-  const handleDate = (
-    date: Date,
-    event: React.SyntheticEvent<any, Event> | undefined,
-  ) => {
+  const handleDate = (date: Date) => {
+    const formattedDate = getFormattedDate(date);
     setCreateDate(date);
     const res = getUnique('createdAt', selected);
-    setSelected([...res, { option: 'createdAt', select: date }]);
+    setSelected([...res, { option: 'createdAt', select: formattedDate }]);
+  };
+  const handleDateReset = () => {
+    setCreateDate(null);
+    const res = getUnique('createdAt', selected);
+    setSelected([...res]);
   };
   useEffect(() => {
-    todos && console.log(getFilteredData(option, select, createDate, mockData));
-    console.log({ selected });
-    // if (select === '전체' && !createDate) {
-    //   todos && setFilter(null);
-    // }
-    // // 상태 필터
-    // else if (select !== '전체' && !createDate) {
-    //   todos && console.log(filterStatus(select, mockData));
-    // }
-    // // 생성일 필터
-    // else if (select === '전체' && createDate) {
-    //   todos && setFilter(filterDate(createDate, mockData));
-    // }
-    // // 상태, 생성일 필터
-    // else {
-    //   console.log(filterAll(select, createDate, mockData));
-    // }
-  }, [select, createDate]);
+    todos && setFilter(getFilteredData(selected, mockData));
+  }, [select, createDate, selected, setFilter, todos]);
 
   return (
     <FilterLayout>
@@ -77,7 +52,6 @@ const TodoFilter: React.FC<ITodoFilter> = ({ todos, filter, setFilter }) => {
         <Text htmlFor="status">상태</Text>
         <Select
           id="status"
-          value={select}
           selectList={SELECT.STATUS}
           handleChange={handleSelect}
         />
@@ -86,22 +60,37 @@ const TodoFilter: React.FC<ITodoFilter> = ({ todos, filter, setFilter }) => {
         <Text htmlFor="important">중요도</Text>
         <Select
           id="important"
-          value={select}
           selectList={SELECT.IMPORTANT}
           handleChange={handleSelect}
         />
       </Contents>
       <Contents>
         <Text htmlFor="createdAt">생성일</Text>
-        <MyDatePicker
-          id="createdAt"
-          date={createDate}
-          handleChange={handleDate}
-        />
+        <DateInput>
+          <MyDatePicker
+            id="createdAt"
+            date={createDate}
+            handleChange={handleDate}
+          />
+          {!!createDate && (
+            <button type="button" onClick={handleDateReset}>
+              <Icon classes="fa fa-times" />
+            </button>
+          )}
+        </DateInput>
       </Contents>
     </FilterLayout>
   );
 };
+const DateInput = styled.div`
+  display: flex;
+  background: ${props => props.theme.color.bgColor};
+  border-radius: 4px;
+  i {
+    font-size: 13px;
+    color: ${props => props.theme.color.textColor};
+  }
+`;
 
 const FilterLayout = styled.div`
   width: 100%;

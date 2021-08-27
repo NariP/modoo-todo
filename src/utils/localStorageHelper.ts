@@ -18,6 +18,7 @@ export interface ITodo {
   updatedAt: string;
   [key: string]: string | any;
 }
+
 interface ILocalStorageHelper {
   getItem: (key: string) => ITodo[] | null;
   setItem: (key: string, data: ITodo[]) => void;
