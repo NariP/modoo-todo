@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ITodo } from 'utils/localStorageHelper';
+import { ITodo } from 'pages/todo/utils/useTodoService';
 import { SELECT, IMPORTANT, STATUS } from 'utils/constants/Status';
 
 interface ITodoSelector {
@@ -97,6 +97,7 @@ const Status = styled.div<{ state?: string | null }>`
   border-radius: 15px;
   cursor: pointer;
   background-color: ${({ state }) => state && setColor(state)};
+  color: #333;
 `;
 
 const StatusSelector = styled.div`

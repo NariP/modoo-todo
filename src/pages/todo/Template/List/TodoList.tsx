@@ -1,25 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import TodoItem from 'pages/todo/Template/List/Item/TodoItem';
-import { ITodo } from 'utils/localStorageHelper';
+import { ITodo } from 'pages/todo/utils/useTodoService';
+import { Draggable } from 'components/Draggable';
+import { CloseButton, Modal } from 'components/Modal';
+import { TodoEdit } from './Item/TodoEdit';
+import { useModal } from 'components/Modal/hooks';
+import { IMPORTANT, STATUS } from 'utils/constants/Status';
 
 interface ITodoList {
-  todos: ITodo[] | null;
+  todos: ITodo[] | [];
   filter: ITodo[] | null;
-  setTodos: (todos: ITodo[] | null) => void;
+  setTodos: (todos: ITodo[] | []) => void;
 }
 
 const TodoList: React.FC<ITodoList> = ({ todos, filter, setTodos }) => {
+  const [todoContext, setTodoContext] = useState({
+    id: -1,
+    taskName: '',
+    status: STATUS.NOT_STARTED,
+    createdAt: '',
+    updatedAt: '미정',
+    important: IMPORTANT.MIDDLE,
+  });
+  const [clickedIdx, setClickedIdx] = useState(-1);
+  const { open, toggleModal } = useModal();
+
   const dataMap = (
     todo: ITodo[] | null,
     filter: ITodo[] | null,
   ): ITodo[] | null => {
     if (!filter) return todo;
-    else return filter;
+    return filter;
   };
 
   return (
     <Body>
+      <Modal open={open} toggleModal={toggleModal}>
+        <Draggable
+          title="수정하기"
+          location={{ x: 'calc(100vw-40%)', y: 'calc(100vh-40%)' }}
+          closeButton={<CloseButton toggleModal={toggleModal} />}
+        >
+          <TodoEdit
+            todo={todoContext}
+            todos={todos}
+            setTodos={setTodos}
+            clickedIdx={clickedIdx}
+            toggleModal={toggleModal}
+          />
+        </Draggable>
+      </Modal>
       <RowHead>
         <Task>목록</Task>
         <StatusSort>상태</StatusSort>
@@ -32,6 +63,9 @@ const TodoList: React.FC<ITodoList> = ({ todos, filter, setTodos }) => {
           todo={todo}
           setTodos={setTodos}
           idx={i}
+          toggleModal={toggleModal}
+          setTodoContext={setTodoContext}
+          setClickedIdx={setClickedIdx}
         />
       ))}
     </Body>

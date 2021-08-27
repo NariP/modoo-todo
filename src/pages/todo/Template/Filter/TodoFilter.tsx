@@ -3,7 +3,7 @@ import { Select } from 'components/Select';
 import { MyDatePicker } from 'components/DatePicker';
 import { SELECT } from 'utils/constants';
 import styled from 'styled-components';
-import { ITodo } from 'utils/localStorageHelper';
+import { ITodo } from 'pages/todo/utils/useTodoService';
 import { getUnique } from './utils';
 
 import { getFilteredData } from 'utils/dataFiltering';

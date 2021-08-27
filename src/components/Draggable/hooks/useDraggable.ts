@@ -1,7 +1,7 @@
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { MOUSE_EVENT } from 'utils/constants';
 
-const useDraggable = (location: { x: number; y: number }) => {
+const useDraggable = (location: { x: number | string; y: number | string }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [mouseDown, setMouseDown] = useState(false);
 

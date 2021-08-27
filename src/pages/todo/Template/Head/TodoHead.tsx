@@ -1,13 +1,13 @@
 import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import TodoFilter from 'pages/todo/Template/Filter/TodoFilter';
-import { ITodo } from 'utils/localStorageHelper';
+import { ITodo } from 'pages/todo/utils/useTodoService';
 import { Icon } from 'components/Icon';
 import { getFormattedDate } from 'utils';
 
 interface ITodoHead {
   todo: string;
-  todos: ITodo[] | null;
+  todos: ITodo[] | [];
   filter: ITodo[] | null;
   setFilter: (todos: ITodo[] | null) => void;
   addTodo: (e: React.FormEvent<HTMLFormElement>) => void;
