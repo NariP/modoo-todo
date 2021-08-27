@@ -22,8 +22,8 @@ const TodoList: React.FC<ITodoList> = ({ todos, filter, setTodos }) => {
     <Body>
       <RowHead>
         <Task>목록</Task>
-        <Sort>중요도</Sort>
         <StatusSort>상태</StatusSort>
+        <Sort>중요도</Sort>
       </RowHead>
       {dataMap(todos, filter)?.map((todo, i) => (
         <TodoItem
@@ -56,10 +56,10 @@ const Task = styled.div`
 
 const Sort = styled.div`
   width: 10%;
-  margin-right: 9px;
 `;
 const StatusSort = styled.div`
   width: 10%;
+  margin-right: 9px;
 `;
 
 const Body = styled.section`

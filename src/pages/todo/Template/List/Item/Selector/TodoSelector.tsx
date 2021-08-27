@@ -44,6 +44,17 @@ const TodoSelector: React.FC<ITodoSelector> = ({
 
   return (
     <>
+      {showStatusSelector && (
+        <StatusSelector>
+          {SELECT.STATUS.slice(1, 4)
+            .reverse()
+            .map(status => (
+              <StatusOption onClick={onStatusClick} key={status} state={status}>
+                {status}
+              </StatusOption>
+            ))}
+        </StatusSelector>
+      )}
       {showImportantSelector && (
         <StatusSelector>
           {SELECT.IMPORTANT.slice(1, 4)
@@ -59,21 +70,10 @@ const TodoSelector: React.FC<ITodoSelector> = ({
             ))}
         </StatusSelector>
       )}
-      {showStatusSelector && (
-        <StatusSelector>
-          {SELECT.STATUS.slice(1, 4)
-            .reverse()
-            .map(status => (
-              <StatusOption onClick={onStatusClick} key={status} state={status}>
-                {status}
-              </StatusOption>
-            ))}
-        </StatusSelector>
-      )}
       {!showImportantSelector && !showStatusSelector && (
         <StatusWrapper>
-          <Status state={todo?.important}>{todo?.important}</Status>
           <Status state={todo?.status}>{todo?.status}</Status>
+          <Status state={todo?.important}>{todo?.important}</Status>
         </StatusWrapper>
       )}
     </>
