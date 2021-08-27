@@ -5,7 +5,7 @@ import { useDraggable } from './hooks';
 interface IModalInnerProps {
   title?: string;
   closeButton?: React.ReactNode;
-  location?: { x: number; y: number };
+  location?: { x: number | string; y: number | string };
 }
 const Draggable: React.FC<IModalInnerProps> = ({
   children,
@@ -42,6 +42,9 @@ const Wrapper = styled.div`
     background: ${theme.color.bgColor};
     border-bottom: 1px solid ${theme.color.normalAlpha};
     box-shadow: 0 3px 5px ${theme.color.normalAlpha};
+    i {
+      color: ${theme.color.textColor};
+    }
   `}
 `;
 const Header = styled.div`

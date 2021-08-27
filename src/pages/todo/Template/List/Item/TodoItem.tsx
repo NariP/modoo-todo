@@ -1,25 +1,30 @@
-import { Modal, ModalInner, CloseButton } from 'components/Modal';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { LS_KEY } from 'utils/constants';
-import localStorageHelper, { ITodo } from 'utils/localStorageHelper';
+import localStorageHelper from 'utils/localStorageHelper';
 import TodoSelector from './Selector/TodoSelector';
 import { Icon } from 'components/Icon';
+import { ITodo } from 'pages/todo/utils/useTodoService';
 
 interface ITodoItem {
   todos: ITodo[] | null;
   todo: ITodo | null;
   setTodos: (todos: ITodo[]) => void;
   idx: number;
+  toggleModal: () => void;
+  setTodoContext: Function;
+  setClickedIdx: Function;
 }
 
-const TodoItem: React.FC<ITodoItem> = ({ todos, todo, setTodos, idx }) => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
-
-  const toggleModal = () => {
-    setOpenModal(prev => !prev);
-  };
-
+const TodoItem: React.FC<ITodoItem> = ({
+  todos,
+  todo,
+  setTodos,
+  idx,
+  toggleModal,
+  setTodoContext,
+  setClickedIdx,
+}) => {
   const deleteItem = (): void => {
     const id = todo?.id;
     const todos = localStorageHelper
@@ -50,13 +55,14 @@ const TodoItem: React.FC<ITodoItem> = ({ todos, todo, setTodos, idx }) => {
     }
   };
 
+  const clickHandler = () => {
+    toggleModal();
+    setTodoContext(todo);
+    setClickedIdx(idx);
+  };
+
   return (
     <>
-      <Modal open={openModal} toggleModal={toggleModal}>
-        <ModalInner closeButton={<CloseButton toggleModal={toggleModal} />}>
-          <ModalText>{todo?.taskName}</ModalText>
-        </ModalInner>
-      </Modal>
       <Row
         draggable
         onDragStart={onDragStart}
@@ -64,7 +70,7 @@ const TodoItem: React.FC<ITodoItem> = ({ todos, todo, setTodos, idx }) => {
         onDrop={onDrop}
         id={String(idx)}
       >
-        <ItemWrapper onClick={toggleModal} id={String(idx)}>
+        <ItemWrapper onClick={clickHandler} id={String(idx)}>
           <Item id={String(idx)}>{todo?.taskName}</Item>
         </ItemWrapper>
         <TodoSelector todos={todos} todo={todo} setTodos={setTodos} idx={idx} />
@@ -118,12 +124,4 @@ const DeleteBtn = styled.button`
     transform: scale(1.2);
     color: ${props => props.theme.color.normalAlpha};
   }
-`;
-
-const ModalText = styled.div`
-  font-size: 25px;
-  padding: 8px 30px;
-  word-wrap: break-word;
-  height: 200px;
-  overflow-y: auto;
 `;

@@ -1,4 +1,4 @@
-import { ITodo } from './localStorageHelper';
+import { ITodo } from 'pages/todo/utils/useTodoService';
 import { ISelected } from 'pages/todo/Template/Filter/TodoFilter';
 
 export const getFilteredData = (

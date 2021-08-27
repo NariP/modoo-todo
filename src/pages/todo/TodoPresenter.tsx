@@ -1,30 +1,20 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import TodoHead from 'pages/todo/Template/Head/TodoHead';
 import TodoList from 'pages/todo/Template/List/TodoList';
-import { ITodo } from 'utils/localStorageHelper';
+import { useTodoService } from './utils';
 
-interface ITodoPresenter {
-  todos: ITodo[] | null;
-  todo: string;
-  filter: ITodo[] | null;
-  setFilter: (todos: ITodo[] | null) => void;
-  addTodo: (e: React.FormEvent<HTMLFormElement>) => void;
-  onChangeTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  inputRef: RefObject<HTMLInputElement>;
-  setTodos: (todos: ITodo[] | null) => void;
-}
-
-const TodoPresenter: React.FC<ITodoPresenter> = ({
-  todos,
-  todo,
-  addTodo,
-  onChangeTodo,
-  inputRef,
-  setTodos,
-  filter,
-  setFilter,
-}) => {
+const TodoPresenter: React.FC = () => {
+  const {
+    todos,
+    setTodos,
+    todo,
+    onChangeTodo,
+    addTodo,
+    inputRef,
+    filter,
+    setFilter,
+  } = useTodoService();
   return (
     <Wrapper>
       <TodoHead
