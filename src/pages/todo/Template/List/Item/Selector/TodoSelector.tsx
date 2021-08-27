@@ -84,7 +84,7 @@ export default TodoSelector;
 
 const StatusWrapper = styled.div`
   display: flex;
-  width: 30%;
+  width: 35%;
   font-weight: bold;
 `;
 

@@ -39,6 +39,9 @@ const Header = styled.div`
     title && `border-bottom: 1px solid ${theme.color.normalAlpha};`}
   padding-bottom: 0.5em;
   display: flex;
+  i {
+    color: ${props => props.theme.color.textColor};
+  }
 `;
 const Title = styled.span`
   display: block;

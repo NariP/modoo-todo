@@ -24,7 +24,8 @@ const Select: React.FC<ISelect> = ({ id, handleChange, selectList }) => {
 const MySelect = styled.select`
   background: ${props => props.theme.color.bgColor};
   color: ${props => props.theme.color.textColor};
-  border: none;
+  border: 1px solid ${props => props.theme.color.normalAlpha};
+  box-shadow: 0 1px 5px ${props => props.theme.color.normalAlpha};
   border-radius: 3px;
   outline: none;
   font-size: 14px;
