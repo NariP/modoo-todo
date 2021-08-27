@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Select } from 'components/Select';
 import { MyDatePicker } from 'components/DatePicker';
 import { SELECT } from 'utils/constants';
@@ -22,7 +22,6 @@ export interface ISelected {
 }
 const TodoFilter: React.FC<ITodoFilter> = ({ todos, filter, setFilter }) => {
   const [select, setSelect] = useState<string>('전체');
-  // const [important, setImportant] = useState<string>('전체');
   const [createDate, setCreateDate] = useState<null | Date>(null);
   const [selected, setSelected] = useState<[] | ISelected[]>([]);
 
@@ -46,51 +45,6 @@ const TodoFilter: React.FC<ITodoFilter> = ({ todos, filter, setFilter }) => {
   useEffect(() => {
     todos && setFilter(getFilteredData(selected, todos));
   }, [select, createDate, selected, setFilter, todos]);
-
-  //   const handleImport = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //     setImportant(e.target.value);
-  //   };
-  //
-  //   const innerFunction = useCallback(() => {
-  //     // 필터 X
-  //     if (select === '전체' && important === '전체' && !createDate) {
-  //       todos && setFilter(null);
-  //       return null
-  //     }
-  //     // 상태
-  //     else if (select !== '전체' && important === '전체' && !createDate) {
-  //       todos && setFilter(filterStatus(select, todos));
-  //     }
-  //     // 생성일
-  //     else if (select === '전체' && important === '전체' && createDate) {
-  //       todos && setFilter(filterDate(createDate, todos));
-  //     }
-  //     // 중요도
-  //     else if (select === '전체' && important !== '전체' && !createDate) {
-  //       todos && setFilter(filterImport(important, todos));
-  //     }
-  //     // 상태, 중요도
-  //     else if (select !== '전체' && important !== '전체' && !createDate) {
-  //       todos && setFilter(filterSatusImport(select, important, todos))
-  //     }
-  //     // 중요도, 생성일
-  //     else if (select === '전체' && important !== '전체' && createDate) {
-  //       todos && setFilter(filterImportDate(important, createDate, todos))
-  //     }
-  //     // 상태, 생성일
-  //     else if (select !== '전체' && important === '전체' && createDate) {
-  //       todos && setFilter(filterStatusDate(select, createDate, todos))
-  //     }
-  //     // 모두
-  //     else {
-  //       todos && setFilter(filterAll(select, important, createDate, todos));
-  //     }
-  //   }, [select, createDate, important, setFilter, todos]);
-  //
-  //   useEffect(() => {
-  //     innerFunction()
-  //   }, [innerFunction]);
-  // >>>>>>> develop
 
   return (
     <FilterLayout>
