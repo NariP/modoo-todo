@@ -1,26 +1,11 @@
 import { ITodo } from './localStorageHelper';
-import { STATUS } from './constants/Status';
 import { getFormattedDate } from 'utils';
-interface IStatus {
-  [key: string]: string;
-}
-const convertStatus: IStatus = {
-  [STATUS.FINISHED]: 'status.FINISHED',
-  [STATUS.ONGOING]: 'status.ONGOING',
-  [STATUS.NOT_STARTED]: 'status.NOT_STARTED',
-  [STATUS.ALL]: 'ALL',
-};
-
-export const OriginData = (data: ITodo[]): ITodo[] => {
-  return data;
-};
 
 export const filterStatus = (status: string, data: ITodo[]): ITodo[] => {
-  let cstatus = convertStatus[status];
-  if (cstatus === 'ALL') {
+  if (status === '전체') {
     return data;
   } else {
-    return data.filter((Itodo: ITodo) => Itodo.status === cstatus);
+    return data.filter((Itodo: ITodo) => Itodo.status === status);
   }
 };
 
@@ -30,11 +15,49 @@ export const filterDate = (date: null | Date, data: ITodo[]): ITodo[] => {
   return data.filter((Itodo: ITodo) => Itodo.createdAt === selectedDate);
 };
 
+export const filterImport = (important: string, data: ITodo[]): ITodo[] => {
+  if (important === '전체') {
+    return data;
+  } else {
+    return data.filter((Itodo: ITodo) => Itodo.important === important);
+  }
+};
+
+export const filterSatusImport = (
+  status: string,
+  important: string,
+  data: ITodo[],
+): ITodo[] => {
+  const filter_status = filterStatus(status, data);
+  return filterImport(important, filter_status);
+};
+
+export const filterImportDate = (
+  important: string,
+  date: Date,
+  data: ITodo[],
+): ITodo[] => {
+  const filter_importnt = filterImport(important, data);
+  return filterDate(date, filter_importnt);
+};
+
+export const filterStatusDate = (
+  status: string,
+  date: Date,
+  data: ITodo[],
+): ITodo[] => {
+  console.log(status, date);
+  const filter_status = filterStatus(status, data);
+  return filterDate(date, filter_status);
+};
+
 export const filterAll = (
   status: string,
+  important: string,
   date: Date | null,
   data: ITodo[],
 ): ITodo[] => {
   const filter_status = filterStatus(status, data);
-  return filterDate(date, filter_status);
+  const filter_importnt = filterImport(important, filter_status);
+  return filterDate(date, filter_importnt);
 };

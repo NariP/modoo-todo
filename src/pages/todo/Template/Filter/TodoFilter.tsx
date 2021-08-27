@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import mockData from 'utils/mockData.json';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Select } from 'components/Select';
 import { MyDatePicker } from 'components/DatePicker';
 import { SELECT } from 'utils/constants';
 import styled from 'styled-components';
 import { ITodo } from 'utils/localStorageHelper';
-
 import {
   filterStatus,
   filterDate,
+  filterImport,
   filterAll,
+  filterSatusImport,
+  filterImportDate,
+  filterStatusDate,
 } from 'utils/dataFiltering';
 
 interface ITodoFilter {
@@ -20,6 +22,7 @@ interface ITodoFilter {
 
 const TodoFilter: React.FC<ITodoFilter> = ({ todos, filter, setFilter }) => {
   const [select, setSelect] = useState<string>('전체');
+  const [important, setImportant] = useState<string>('전체');
   const [createDate, setCreateDate] = useState<null | Date>(null);
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelect(e.target.value);
@@ -27,23 +30,50 @@ const TodoFilter: React.FC<ITodoFilter> = ({ todos, filter, setFilter }) => {
   const handleDate = (e: Date) => {
     setCreateDate(e);
   };
-  useEffect(() => {
-    if (select === '전체' && !createDate) {
+
+  const handleImport = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setImportant(e.target.value);
+  };
+
+  const innerFunction = useCallback(() => {
+    // 필터 X
+    if (select === '전체' && important === '전체' && !createDate) {
       todos && setFilter(null);
+      return null
     }
-    // 상태 필터
-    else if (select !== '전체' && !createDate) {
-      todos && console.log(filterStatus(select, todos));
+    // 상태
+    else if (select !== '전체' && important === '전체' && !createDate) {
+      todos && setFilter(filterStatus(select, todos));
     }
-    // 생성일 필터
-    else if (select === '전체' && createDate) {
+    // 생성일
+    else if (select === '전체' && important === '전체' && createDate) {
       todos && setFilter(filterDate(createDate, todos));
     }
-    // 상태, 생성일 필터
-    else {
-      console.log(filterAll(select, createDate, mockData));
+    // 중요도
+    else if (select === '전체' && important !== '전체' && !createDate) {
+      todos && setFilter(filterImport(important, todos));
     }
-  }, [select, createDate]);
+    // 상태, 중요도
+    else if (select !== '전체' && important !== '전체' && !createDate) {
+      todos && setFilter(filterSatusImport(select, important, todos))
+    }
+    // 중요도, 생성일
+    else if (select === '전체' && important !== '전체' && createDate) {
+      todos && setFilter(filterImportDate(important, createDate, todos))
+    }
+    // 상태, 생성일
+    else if (select !== '전체' && important === '전체' && createDate) {
+      todos && setFilter(filterStatusDate(select, createDate, todos))
+    }
+    // 모두
+    else {
+      todos && setFilter(filterAll(select, important, createDate, todos));
+    }
+  }, [select, createDate, important, setFilter, todos]);
+
+  useEffect(() => {
+    innerFunction()
+  }, [innerFunction]);
 
   return (
     <FilterLayout>
@@ -53,7 +83,7 @@ const TodoFilter: React.FC<ITodoFilter> = ({ todos, filter, setFilter }) => {
       </Contents>
       <Contents>
         <Text htmlFor="important">중요도</Text>
-        <Select id={"important"} value={select} selectList={SELECT.IMPORTANT} handleChange={handleSelect} />
+        <Select id={"important"} value={important} selectList={SELECT.IMPORTANT} handleChange={handleImport} />
       </Contents>
       <Contents>
         <Text htmlFor="createDate">생성일</Text>
