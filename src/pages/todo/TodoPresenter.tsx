@@ -23,7 +23,7 @@ const TodoPresenter: React.FC<ITodoPresenter> = ({
   inputRef,
   setTodos,
   filter,
-  setFilter
+  setFilter,
 }) => {
   return (
     <Wrapper>
@@ -47,5 +47,4 @@ const Wrapper = styled.article`
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 `;

@@ -17,6 +17,12 @@ const GlobalStyle = createGlobalStyle`
   border: none;
   outline: none;
   }
+  ul {
+  list-style: none;
+  }
+  li {
+  display: block;
+  }
   button {
   background: none;
   border: none;
