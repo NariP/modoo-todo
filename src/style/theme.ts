@@ -6,6 +6,7 @@ export const light: DefaultTheme = {
     secondary: '#b1f9b3',
     bgColor: 'white',
     textColor: '#333',
+    secondaryText: '#999',
     normalAlpha: 'rgba(153, 153, 153, 0.3)',
   },
 };
@@ -15,6 +16,7 @@ export const dark: DefaultTheme = {
     secondary: '#81c784',
     bgColor: '#333',
     textColor: 'white',
+    secondaryText: '#999',
     normalAlpha: 'rgba(153, 153, 153, 0.3)',
   },
 };

@@ -59,7 +59,7 @@ const TodoFilter: React.FC<ITodoFilter> = ({ todos, filter, setFilter }) => {
       <Contents>
         <Text htmlFor="important">중요도</Text>
         <Select
-          id={'important'}
+          id="important"
           selectList={SELECT.IMPORTANT}
           handleChange={handleSelect}
         />
@@ -96,7 +96,9 @@ const FilterLayout = styled.div`
   width: 100%;
   height: 80%;
   display: flex;
-  background-color: #81c784;
+  justify-content: flex-end;
+  background-color: inherit;
+  padding: 20px 0 20px 0;
 `;
 
 const Contents = styled.div`
@@ -110,10 +112,11 @@ const Contents = styled.div`
 const Text = styled.label`
   height: 100%;
   display: flex;
-  font-size: 14px;
+  font-size: 12px;
   align-items: flex-end;
   font-weight: 600;
   padding-bottom: 5px;
+  color: ${props => props.theme.color.secondaryText};
 `;
 
 export default TodoFilter;

@@ -22,10 +22,8 @@ const TodoList: React.FC<ITodoList> = ({ todos, filter, setTodos }) => {
     <Body>
       <RowHead>
         <Task>목록</Task>
-        <InnerWrapper>
-          <Sort>중요도</Sort>
-          <Sort>상태</Sort>
-        </InnerWrapper>
+        <Sort>중요도</Sort>
+        <StatusSort>상태</StatusSort>
       </RowHead>
       {dataMap(todos, filter)?.map((todo, i) => (
         <TodoItem
@@ -45,30 +43,28 @@ export default TodoList;
 const RowHead = styled.div`
   width: 100%;
   display: flex;
-  padding-left: 27%;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 0.8em;
+  color: ${props => props.theme.color.secondaryText};
   margin-bottom: 10px;
-`;
-
-const InnerWrapper = styled.div`
-  display: flex;
-  padding-left: 21%;
-  width: 300px;
+  text-align: center;
+  padding: 0 20px;
 `;
 
 const Task = styled.div`
-  width: 20%;
+  width: 60%;
 `;
 
 const Sort = styled.div`
-  margin-right: 8%;
+  width: 10%;
+  margin-right: 9px;
+`;
+const StatusSort = styled.div`
+  width: 10%;
 `;
 
 const Body = styled.section`
-  height: 60vh;
-  border: 5px solid #80c683;
-  padding: 30px;
+  min-height: 50vh;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   border-radius: 0px 0px 20px 20px;

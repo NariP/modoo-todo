@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import TodoFilter from 'pages/todo/Template/Filter/TodoFilter';
 import { ITodo } from 'utils/localStorageHelper';
 import { Icon } from 'components/Icon';
+import { getFormattedDate } from 'utils';
 
 interface ITodoHead {
   todo: string;
@@ -23,9 +24,11 @@ const TodoHead: React.FC<ITodoHead> = ({
   onChangeTodo,
   inputRef,
 }) => {
+  const today = getFormattedDate(new Date());
   return (
     <Header>
       <Wrap direction="column">
+        <Today>{today}</Today>
         <Wrap direction="row">
           <HiddenTitle>todo list</HiddenTitle>
           <Form onSubmit={addTodo} id="todoForm">
@@ -36,10 +39,10 @@ const TodoHead: React.FC<ITodoHead> = ({
               onChange={onChangeTodo}
               type="text"
             />
+            <Btn form="todoForm" type="submit">
+              <Icon classes="fas fa-plus" />
+            </Btn>
           </Form>
-          <Btn form="todoForm" type="submit">
-            <Icon classes="fas fa-plus" />
-          </Btn>
         </Wrap>
         <TodoFilter todos={todos} filter={filter} setFilter={setFilter} />
       </Wrap>
@@ -52,21 +55,28 @@ export default TodoHead;
 const Wrap = styled.div<{ direction: string }>`
   display: flex;
   flex-direction: ${props => props.direction};
+  border-bottom: ${props =>
+    props.direction === 'column'
+      ? `2px solid ${props.theme.color.primary}`
+      : 'none'};
+  justify-content: center;
   width: 100%;
   height: 100%;
 `;
-
+const Today = styled.div`
+  color: ${props => props.theme.color.secondaryText};
+  font-size: 0.8em;
+  padding-bottom: 10px;
+`;
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
-  height: 200px;
-  padding: 70px 70px 10px 70px;
-  background-color: #81c784;
-  border-radius: 20px 20px 0 0;
+  padding: 10px;
+  background-color: inherit;
 `;
 
 const HiddenTitle = styled.div`
-  position: absolute !important;
+  position: absolute;
   overflow: hidden;
   clip: rect(0 0 0 0);
   width: 1px;
@@ -75,23 +85,31 @@ const HiddenTitle = styled.div`
 `;
 
 const Form = styled.form`
-  width: 100%;
+  border: 2px solid ${props => props.theme.color.normalAlpha};
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
   height: 100%;
-  margin-right: 40px;
+  padding: 5px 5px 5px 0;
 `;
 
 const Input = styled.input`
-  width: 100%;
+  min-width: 400px;
   height: 100%;
-  font-size: 33px;
+  font-size: 20px;
   padding-left: 20px;
+  background: ${props => props.theme.color.bgColor};
+  color: ${props => props.theme.color.textColor};
 `;
 
 const Btn = styled.button`
-  width: 80px;
-  font-size: 33px;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
   border-radius: 50%;
-  background-color: #b1f9b3;
+  background: ${props => props.theme.color.secondary};
+  color: ${props => props.theme.color.textColor};
+  margin-left: 10px;
   transition: transform 200ms ease-in;
   :hover {
     transform: scale(1.1);

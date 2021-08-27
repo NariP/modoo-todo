@@ -1,4 +1,4 @@
-import { Modal } from 'components/Modal';
+import { Modal, ModalInner, CloseButton } from 'components/Modal';
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { LS_KEY } from 'utils/constants';
@@ -53,14 +53,9 @@ const TodoItem: React.FC<ITodoItem> = ({ todos, todo, setTodos, idx }) => {
   return (
     <>
       <Modal open={openModal} toggleModal={toggleModal}>
-        <ModalWrapper>
-          <ModalHeader>
-            <ModalBtn onClick={toggleModal}>
-              <Icon classes="fas fa-times-circle" />
-            </ModalBtn>
-          </ModalHeader>
+        <ModalInner closeButton={<CloseButton toggleModal={toggleModal} />}>
           <ModalText>{todo?.taskName}</ModalText>
-        </ModalWrapper>
+        </ModalInner>
       </Modal>
       <Row
         draggable
@@ -85,15 +80,21 @@ export default TodoItem;
 
 const Row = styled.ul`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
+  padding: 15px 10px 15px 20px;
   margin: 0;
-  box-shadow: 2px 2px 2px #00000020;
+  border-radius: 10px;
+  border: 1px solid ${props => props.theme.color.normalAlpha};
+  box-shadow: 0 3px 5px ${props => props.theme.color.normalAlpha};
+  margin-bottom: 10px;
+  &:hover {
+    transform: scale(1.01);
+    transition: all 200ms ease-in;
+  }
 `;
 
 const ItemWrapper = styled.li`
-  width: 50%;
+  width: 60%;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -101,38 +102,22 @@ const ItemWrapper = styled.li`
 
 const Item = styled.div`
   width: 100%;
-  font-size: 25px;
+  font-size: 1.1em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
 const DeleteBtn = styled.button`
-  font-size: 22px;
-  background-color: transparent;
+  width: 5%;
+  font-size: 15px;
+  color: ${props => props.theme.color.textColor};
+
   transition: transform 200ms ease-in;
   :hover {
     transform: scale(1.2);
+    color: ${props => props.theme.color.normalAlpha};
   }
-`;
-
-const ModalWrapper = styled.div`
-  position: fixed;
-  top: 30vh;
-  width: 400px;
-  background-color: beige;
-  padding-bottom: 20px;
-  border-radius: 20px;
-`;
-
-const ModalHeader = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  padding: 8px 8px;
-`;
-
-const ModalBtn = styled.button`
-  font-size: 33px;
 `;
 
 const ModalText = styled.div`

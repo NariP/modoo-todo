@@ -28,8 +28,8 @@ const StyledLabel = styled.label`
 const StyledHeader = styled.header`
   background: inherit;
   color: inherit;
-  border-bottom: 1px solid rgba(153, 153, 153, 0.3);
-  box-shadow: 0 3px 5px rgba(153, 153, 153, 0.3);
+  border-bottom: 1px solid ${props => props.theme.color.normalAlpha};
+  box-shadow: 0 3px 5px ${props => props.theme.color.normalAlpha};
   display: flex;
   justify-content: space-between;
   align-items: center;
