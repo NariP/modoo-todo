@@ -4,11 +4,20 @@ import styled from 'styled-components';
 interface IModalProps {
   open: boolean;
   toggleModal: Function;
+  func?: Function;
 }
-const Modal: React.FC<IModalProps> = ({ children, toggleModal, open }) => {
+const Modal: React.FC<IModalProps> = ({
+  children,
+  toggleModal,
+  open,
+  func,
+}) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const clickHandler = (e: MouseEvent<HTMLDivElement>) => {
-    e.target === modalRef.current && toggleModal();
+    if (e.target !== modalRef.current) return;
+    toggleModal();
+    if (!func) return;
+    func();
   };
   return (
     <StyledModal ref={modalRef} open={open} onClick={clickHandler}>

@@ -24,6 +24,11 @@ const TodoList: React.FC<ITodoList> = ({ todos, filter, setTodos }) => {
     important: IMPORTANT.MIDDLE,
   });
   const [clickedIdx, setClickedIdx] = useState(-1);
+  const [task, setTask] = useState('');
+  const [selectedLabel, setSelectedLabel] = useState({
+    status: '',
+    important: '',
+  });
   const { open, toggleModal } = useModal();
 
   const dataMap = (
@@ -33,16 +38,29 @@ const TodoList: React.FC<ITodoList> = ({ todos, filter, setTodos }) => {
     if (!filter) return todo;
     return filter;
   };
+  const resetTodo = () => {
+    setTask('');
+    setSelectedLabel({
+      status: '',
+      important: '',
+    });
+  };
 
   return (
     <Body>
-      <Modal open={open} toggleModal={toggleModal}>
+      <Modal open={open} toggleModal={toggleModal} func={resetTodo}>
         <Draggable
           title="수정하기"
           location={{ x: 'calc(100vw-40%)', y: 'calc(100vh-40%)' }}
-          closeButton={<CloseButton toggleModal={toggleModal} />}
+          closeButton={
+            <CloseButton toggleModal={toggleModal} func={resetTodo} />
+          }
         >
           <TodoEdit
+            task={task}
+            setTask={setTask}
+            selectedLabel={selectedLabel}
+            setSelectedLabel={setSelectedLabel}
             todo={todoContext}
             todos={todos}
             setTodos={setTodos}

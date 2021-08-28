@@ -6,7 +6,6 @@ export const getFilteredData = (
   data: ITodo[],
 ): ITodo[] => {
   if (!selected) return data;
-
   selected.forEach(({ option, select }) => {
     data =
       option !== 'createdAt' && select === '전체'

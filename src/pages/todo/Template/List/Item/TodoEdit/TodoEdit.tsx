@@ -1,10 +1,17 @@
-import React, { useState, MouseEvent } from 'react';
+import React from 'react';
 import { Icon } from 'components/Icon';
 import { ITodo } from 'pages/todo/utils/useTodoService';
 import styled from 'styled-components';
 import RadioSelect from './RadioSelect';
 
 interface ITodoEditProps {
+  task: string;
+  selectedLabel: {
+    status: string;
+    important: string;
+  };
+  setTask: Function;
+  setSelectedLabel: Function;
   todo: ITodo;
   setTodos: Function;
   clickedIdx: number;
@@ -12,19 +19,32 @@ interface ITodoEditProps {
   toggleModal: Function;
 }
 const TodoEdit: React.FC<ITodoEditProps> = ({
+  task,
+  setTask,
+  selectedLabel,
+  setSelectedLabel,
   todo,
   todos,
   setTodos,
   clickedIdx,
   toggleModal,
 }) => {
-  const [task, setTask] = useState('');
-  const [selectedLabel, setSelectedLabel] = useState({
-    status: '',
-    important: '',
-  });
   const selected = [todo.status, todo.important];
-  const clickHandler = (e: MouseEvent<HTMLButtonElement>) => {
+  const updateTodos = (updateData: ITodo) => {
+    if (clickedIdx === 0) {
+      setTodos([updateData].concat(todos.slice(1)));
+    } else if (clickedIdx === todos.length - 1) {
+      // 마지막 인덱스일 때
+      setTodos([...todos.slice(0, todos.length - 1), updateData]);
+    } else {
+      setTodos([
+        ...todos.slice(0, clickedIdx),
+        updateData,
+        ...todos.slice(clickedIdx + 1),
+      ]);
+    }
+  };
+  const clickHandler = () => {
     const modifiedTodo = {
       ...todo,
       taskName: !task ? todo.taskName : task,
@@ -33,22 +53,11 @@ const TodoEdit: React.FC<ITodoEditProps> = ({
         ? todo.important
         : selectedLabel.important,
     };
-    console.log(clickedIdx, modifiedTodo);
-    if (clickedIdx === 0) {
-      setTodos([modifiedTodo].concat(todos.slice(1)));
-    } else if (clickedIdx === todos.length - 1) {
-      // 마지막 인덱스일 때
-      setTodos([...todos.slice(0, todos.length - 1), modifiedTodo]);
-    } else {
-      setTodos([
-        ...todos.slice(0, clickedIdx),
-        modifiedTodo,
-        ...todos.slice(clickedIdx + 1),
-      ]);
-    }
+    updateTodos(modifiedTodo);
     setTask('');
     toggleModal();
   };
+
   return (
     <Form>
       <TextInput>
