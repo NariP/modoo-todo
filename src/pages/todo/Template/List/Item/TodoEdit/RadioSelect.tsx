@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { SELECT } from 'utils/constants';
 import styled from 'styled-components';
 
@@ -15,10 +15,6 @@ const RadioSelect = ({
   setSelectedLabel: Function;
   selectedLabel: { status: string; important: string; [key: string]: string };
 }) => {
-  useEffect(() => {
-    console.log('update');
-  }, [selectedLabel]);
-
   return (
     <RadioLayout>
       <Title>{name === 'status' ? '상   태' : '중요도'}</Title>
@@ -34,8 +30,6 @@ const RadioSelect = ({
                 selectedLabel ? item === selectedLabel[name] : item === selected
               }
               onChange={e => {
-                //NOTE: 라벨을 눌렀는데 onChange 자체가 일어나지 않음
-                console.log('dd', name, e.target.id);
                 setSelectedLabel({
                   ...selectedLabel,
                   [name]: e.target.id,

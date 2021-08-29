@@ -1,4 +1,4 @@
-import React, { EventHandler, FormEvent } from 'react';
+import React, { FormEvent } from 'react';
 import { Icon } from 'components/Icon';
 import { ITodo } from 'pages/todo/utils/useTodoService';
 import styled from 'styled-components';
