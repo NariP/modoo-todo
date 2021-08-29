@@ -5,7 +5,7 @@
   <br/>
 <img src="https://img.shields.io/github/languages/top/NariP/modoo-todo?color=skyblue&logo=typescript&style=flat-square"></img>
 <img src="https://img.shields.io/github/repo-size/NariP/modoo-todo?color=green&logo=github&style=flat-square"></img>
-<h2 align='middle'><a href='https://modo-todo.netlify.app/'>https://modo-todo.netlify.app/</a></h2>
+<h2 align='middle'><a href='https://modo-todo.netlify.app/'>https://modoo-todo.netlify.app/</a></h2>
 </p>
 
 
