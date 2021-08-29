@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SELECT } from 'utils/constants';
 import styled from 'styled-components';
 
@@ -15,6 +15,10 @@ const RadioSelect = ({
   setSelectedLabel: Function;
   selectedLabel: { status: string; important: string; [key: string]: string };
 }) => {
+  useEffect(() => {
+    console.log('update');
+  }, [selectedLabel]);
+
   return (
     <RadioLayout>
       <Title>{name === 'status' ? '상   태' : '중요도'}</Title>
@@ -25,12 +29,18 @@ const RadioSelect = ({
               type="radio"
               id={item}
               name={name}
-              onChange={e =>
+              value={item}
+              checked={
+                selectedLabel ? item === selectedLabel[name] : item === selected
+              }
+              onChange={e => {
+                //NOTE: 라벨을 눌렀는데 onChange 자체가 일어나지 않음
+                console.log('dd', name, e.target.id);
                 setSelectedLabel({
                   ...selectedLabel,
                   [name]: e.target.id,
-                })
-              }
+                });
+              }}
             />
             <Label
               htmlFor={item}
@@ -80,12 +90,11 @@ const Label = styled.label<{
   border-radius: 10px;
   cursor: pointer;
   border: ${({ itemProp, selected, selectedLabel }) =>
-    (selectedLabel && selectedLabel === itemProp) ||
-    (!selectedLabel && itemProp === selected)
+    (selectedLabel ? itemProp === selectedLabel : itemProp === selected)
       ? `1px solid #E92EFB`
       : 'none'};
   &:active {
-    border: 1px solid ${props => props.theme.color.primary};
+    border: 1px solid #e92efb;
   }
 `;
 

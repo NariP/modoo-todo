@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { EventHandler, FormEvent } from 'react';
 import { Icon } from 'components/Icon';
 import { ITodo } from 'pages/todo/utils/useTodoService';
 import styled from 'styled-components';
@@ -31,20 +31,12 @@ const TodoEdit: React.FC<ITodoEditProps> = ({
 }) => {
   const selected = [todo.status, todo.important];
   const updateTodos = (updateData: ITodo) => {
-    if (clickedIdx === 0) {
-      setTodos([updateData].concat(todos.slice(1)));
-    } else if (clickedIdx === todos.length - 1) {
-      // 마지막 인덱스일 때
-      setTodos([...todos.slice(0, todos.length - 1), updateData]);
-    } else {
-      setTodos([
-        ...todos.slice(0, clickedIdx),
-        updateData,
-        ...todos.slice(clickedIdx + 1),
-      ]);
-    }
+    const newTodos: ITodo[] = [...todos];
+    newTodos[clickedIdx] = updateData;
+    setTodos(newTodos);
   };
-  const clickHandler = () => {
+  const clickHandler = (e: FormEvent) => {
+    e.preventDefault();
     const modifiedTodo = {
       ...todo,
       taskName: !task ? todo.taskName : task,
@@ -55,11 +47,15 @@ const TodoEdit: React.FC<ITodoEditProps> = ({
     };
     updateTodos(modifiedTodo);
     setTask('');
+    setSelectedLabel({
+      status: '',
+      important: '',
+    });
     toggleModal();
   };
 
   return (
-    <Form>
+    <Form onSubmit={clickHandler}>
       <TextInput>
         <Label htmlFor="taskName">todo</Label>
         <Input
@@ -83,7 +79,7 @@ const TodoEdit: React.FC<ITodoEditProps> = ({
           />
         );
       })}
-      <Button type="button" onClick={clickHandler}>
+      <Button type="submit">
         <Icon>수정하기 ✏️</Icon>
       </Button>
     </Form>

@@ -31,13 +31,6 @@ const TodoList: React.FC<ITodoList> = ({ todos, filter, setTodos }) => {
   });
   const { open, toggleModal } = useModal();
 
-  const dataMap = (
-    todo: ITodo[] | null,
-    filter: ITodo[] | null,
-  ): ITodo[] | null => {
-    if (!filter) return todo;
-    return filter;
-  };
   const resetTodo = () => {
     setTask('');
     setSelectedLabel({
@@ -74,7 +67,7 @@ const TodoList: React.FC<ITodoList> = ({ todos, filter, setTodos }) => {
         <StatusSort>상태</StatusSort>
         <Sort>중요도</Sort>
       </RowHead>
-      {dataMap(todos, filter)?.map((todo, i) => (
+      {filter?.map((todo, i) => (
         <TodoItem
           key={i}
           todos={todos}

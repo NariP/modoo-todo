@@ -48,6 +48,7 @@ const useTodoService = () => {
   };
 
   useEffect(() => {
+    // 처음에 로컬 스토리지에서 데이터를 가져온다
     const localData = localStorageHelper.getItem(LS_KEY.TODOS);
     if (!localData) return;
     setTodos(localData);

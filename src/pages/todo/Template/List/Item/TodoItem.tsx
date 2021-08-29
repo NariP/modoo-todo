@@ -26,12 +26,9 @@ const TodoItem: React.FC<ITodoItem> = ({
   setClickedIdx,
 }) => {
   const deleteItem = (): void => {
-    const id = todo?.id;
-    const todos = localStorageHelper
-      ?.getItem(LS_KEY.TODOS)
-      ?.filter(todo => todo.id !== id);
-    todos && localStorageHelper.setItem(LS_KEY.TODOS, [...todos]);
-    todos && setTodos(todos);
+    const left = todos?.filter(item => item.id !== todo?.id) ?? [];
+    setTodos(left);
+    localStorageHelper.setItem(LS_KEY.TODOS, left);
   };
 
   let endIdx = useRef<number | null>();
@@ -55,10 +52,14 @@ const TodoItem: React.FC<ITodoItem> = ({
     }
   };
 
+  const getRealIdx = () => {
+    return todos?.findIndex(({ id }) => id === todo?.id) ?? -1;
+  };
+
   const clickHandler = () => {
     toggleModal();
     setTodoContext(todo);
-    setClickedIdx(idx);
+    setClickedIdx(getRealIdx());
   };
 
   return (
@@ -73,7 +74,12 @@ const TodoItem: React.FC<ITodoItem> = ({
         <ItemWrapper onClick={clickHandler} id={String(idx)}>
           <Item id={String(idx)}>{todo?.taskName}</Item>
         </ItemWrapper>
-        <TodoSelector todos={todos} todo={todo} setTodos={setTodos} idx={idx} />
+        <TodoSelector
+          todos={todos}
+          todo={todo}
+          setTodos={setTodos}
+          idx={getRealIdx()}
+        />
         <DeleteBtn id={String(todo?.id)} onClick={deleteItem}>
           <Icon classes="fas fa-trash-alt" />
         </DeleteBtn>

@@ -72,8 +72,12 @@ const TodoSelector: React.FC<ITodoSelector> = ({
       )}
       {!showImportantSelector && !showStatusSelector && (
         <StatusWrapper>
-          <Status state={todo?.status}>{todo?.status}</Status>
-          <Status state={todo?.important}>{todo?.important}</Status>
+          <Status state={todo?.status} onClick={onStatusClick}>
+            {todo?.status}
+          </Status>
+          <Status state={todo?.important} onClick={onImportantClick}>
+            {todo?.important}
+          </Status>
         </StatusWrapper>
       )}
     </>

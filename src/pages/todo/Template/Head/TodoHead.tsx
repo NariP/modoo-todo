@@ -89,12 +89,13 @@ const Form = styled.form`
   border-radius: 10px;
   overflow: hidden;
   display: flex;
+  width: 80%;
   height: 100%;
   padding: 5px 5px 5px 0;
 `;
 
 const Input = styled.input`
-  min-width: 400px;
+  min-width: calc(100% - 50px);
   height: 100%;
   font-size: 20px;
   padding-left: 20px;
